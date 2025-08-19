@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <title>Donație reușită</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
+      color: #2d3436;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      color: #0984e3;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    p.description {
+      font-size: 1.1rem;
+      color: #636e72;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #0984e3;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      margin-top: 15px;
+    }
+    a:hover {
+      background-color: #74b9ff;
+    }
+    .social-links {
+      margin-top: 30px;
+    }
+  .back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  background-color: #dfe6e9;
+  color: #2d3436;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 35px;
+  border: 1px solid #b2bec3;
+}
+
+.back-button:hover {
+  background-color: #b2bec3;
+  color: #000;
+}
+    .social-links a {
+      background-color: #2d3436;
+      margin: 0 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .social-links a.discord { background-color: #7289da; }
+    .social-links a.discord:hover { background-color: #5b6eae; }
+    .social-links a.facebook { background-color: #3b5998; }
+    .social-links a.facebook:hover { background-color: #2d4373; }
+    .social-links a.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); color: white; }
+    .social-links a.instagram:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Mulțumim pentru susținere!</h1>
+  <p class="description">
+    Plata a fost procesată cu succes. Îți mulțumim pentru donația ta!<br/>
+    Pentru a rămâne la curent cu noutățile, te invităm să ne urmărești pe Discord și rețelele sociale:
+  </p>
+  <div class="social-links">
+    <a href="https://discord.gg/yourdiscordinvite" target="_blank" rel="noopener" class="discord">Discord</a>
+    <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener" class="facebook">Facebook</a>
+    <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener" class="instagram">Instagram</a>
+  </div>
+  <a th:href="@{/}" class="back-button">← Înapoi la pagina principală</a>
+
+</div>
+</body>
+</html>

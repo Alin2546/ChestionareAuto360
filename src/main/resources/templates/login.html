@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="ro">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Autentificare – ChestionareAuto360 🚗</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+          box-sizing: border-box;
+          font-family: 'Inter', sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          background: linear-gradient(120deg, #dff9fb, #74b9ff);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 20px;
+        }
+
+        .login-container {
+          background: #fff;
+          padding: 40px 30px;
+          border-radius: 16px;
+          max-width: 420px;
+          width: 100%;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          transition: box-shadow 0.3s ease;
+        }
+
+        .login-container:hover {
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          text-align: center;
+          color: #0984e3;
+          font-size: 2rem;
+          margin-bottom: 25px;
+        }
+
+        .info-message {
+          font-size: 0.95rem;
+          color: #34495e;
+          background-color: #ecf9ff;
+          padding: 12px 16px;
+          border-left: 4px solid #0984e3;
+          border-radius: 8px;
+          margin-bottom: 20px;
+          line-height: 1.5;
+        }
+
+        label {
+          display: block;
+          margin-bottom: 6px;
+          font-weight: 600;
+          font-size: 0.95rem;
+          color: #2d3436;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+          width: 100%;
+          padding: 12px 14px;
+          margin-bottom: 16px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          transition: border-color 0.2s;
+          font-size: 1rem;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+          outline: none;
+          border-color: #0984e3;
+          box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.2);
+        }
+
+        .checkbox-container {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          font-size: 0.9rem;
+        }
+
+        .checkbox-container input {
+          margin-right: 10px;
+        }
+
+        button {
+          width: 100%;
+          padding: 12px;
+          font-size: 1.1rem;
+          background: #0984e3;
+          color: #fff;
+          border: none;
+          border-radius: 10px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+
+        button:hover {
+          background: #56aaff;
+        }
+
+        .forgot-link {
+          display: block;
+          text-align: center;
+          margin-top: 15px;
+          font-size: 0.9rem;
+          color: #0984e3;
+          text-decoration: none;
+        }
+
+        .forgot-link:hover {
+          text-decoration: underline;
+        }
+
+        .error-message {
+          background-color: #ffecec;
+          color: #d63031;
+          padding: 10px;
+          border-radius: 8px;
+          margin-top: 16px;
+          text-align: center;
+          font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>Autentificare elevi</h1>
+
+    <div class="info-message">
+        Dacă nu există contul, acesta va fi creat automat.<br>
+        Continuarea navigării pe site reprezintă acordul dumneavoastră cu privire la prelucrarea datelor cu caracter personal.
+    </div>
+
+    <form method="post" action="/login">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="password">Parolă:</label>
+        <input type="password" name="password" id="password" required>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">
+                Accept
+                <a href="/terms" target="_blank" rel="noopener noreferrer">
+                    termenii și condițiile
+                </a>
+            </label>
+        </div>
+
+
+        <button type="submit">Autentifică-te</button>
+    </form>
+
+    <div th:if="${param.error}" class="error-message">
+        Email sau parolă incorecte. Încearcă din nou.
+    </div>
+
+    <a class="forgot-link" href="/forgotPassword">Ai uitat parola?</a>
+</div>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>
