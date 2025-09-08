@@ -1,12 +1,19 @@
 package com.chestionare.chestionare360.Controller;
 
+
+import com.chestionare.chestionare360.Repository.QuizQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+
+    private final QuizQuestionRepository quizQuestionRepository;
 
     @GetMapping
     public String homePage(){
@@ -24,7 +31,13 @@ public class HomeController {
     }
 
     @GetMapping("/car-quizzes")
-    public String carQuizzes() {
+    public String carQuizzes(Model model) {
+        List<String> categories = List.of("A", "B", "C", "D", "E", "Tr", "13din15");
+
+        List<String> existingCategories = categories.stream()
+                .filter(quizQuestionRepository::existsByCategory)
+                .toList();
+        model.addAttribute("categories", categories);
         return "car-quizzes";
     }
 

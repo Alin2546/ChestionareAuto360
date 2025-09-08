@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ro">
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Chestionare360 - Acasă</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chestionare Auto</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -215,8 +217,9 @@
             color: #666;
         }
 
-        @media (max-width: 768px) {
 
+        @media (max-width: 768px) {
+            /* Content devine coloana */
             .content-wrapper {
                 flex-direction: column;
                 height: auto;
@@ -256,31 +259,31 @@
     font-weight: 600;
     line-height: 1.3;
     margin-top: auto;
-}
+    }
 
 
-body, html {
-  height: 100%;
+    body, html {
+    height: 100%;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     font-family: 'Poppins', sans-serif;
     background-color: #f5f7fa;
-}
+    }
 
-.content-wrapper {
+    .content-wrapper {
     flex: 1 0 auto;
     padding-top: 56px;
-}
-.header-text .step-number {
+    }
+    .header-text .step-number {
     color: #d93025;
     font-weight: 700;
     font-size: 1.3rem;
     margin-right: 0.25rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
-}
-.sidebar a.sustine-proiect {
+    }
+    .sidebar a.sustine-proiect {
     background-color: #374151;
     color: #f9fafb;
     font-weight: 600;
@@ -290,12 +293,168 @@ body, html {
     border-radius: 8px;
     font-size: 1.05rem;
     transition: background-color 0.3s, transform 0.2s;
-}
+    }
 
-.sidebar a.sustine-proiect:hover {
+    .sidebar a.sustine-proiect:hover {
     background-color: #1f2937;
     transform: scale(1.05);
-}
+    }
+
+
+    .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #004aad;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 2rem;
+    }
+
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+
+    .card {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .card h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #004aad;
+        margin-bottom: 1rem;
+    }
+
+
+    .btn-group {
+        margin-top: auto;
+    }
+
+    .btn {
+        background-color: #007bff;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.2s, transform 0.2s;
+        display: inline-block;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .categories-row {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2rem;
+        justify-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .categories-row .card {
+        flex: 1 1 150px;
+        max-width: 150px;
+    }
+
+
+    .special-card {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-align: center;
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .special-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .special-card h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #004aad;
+        margin-bottom: 1rem;
+    }
+
+    .card.btn-card {
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        width: 100px;
+        border-radius: 12px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .card.btn-card h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .card.btn-card:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+            @media (max-width: 992px) {
+        .categories-row {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .categories-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .center-card {
+        grid-column: 2 / span 4; /* ocupă mijlocul rândului */
+        justify-self: center;
+         width: 350px !important;
+    }
     </style>
 </head>
 <body>
@@ -330,56 +489,17 @@ body, html {
 </div>
 
 
-<div class="content-wrapper" id="content-wrapper">
-    <div class="main">
-        <h1>Bine ai venit!</h1>
-        <p>
-            Îți oferim totul gratuit. <br>
-            Dacă te ajută, ajută și tu. <br>
-            Fair, nu?
-        </p>
-        <a th:href="@{/test/start}" class="start-button">Începe un chestionar</a>
-    </div>
+<div id="content-wrapper" class="content-wrapper">
+    <div class="container">
+        <div class="title">Chestionare Auto</div>
+        <div class="subtitle">Alege o categorie pentru a începe testul</div>
 
-    <div class="right-panel">
-        <div class="branding">
-            <h3>Indice de performanță</h3>
-            <img
-                    src="https://media.istockphoto.com/id/2147558904/ro/vector/indicator-rotund-cu-emo%C8%9Bie-neutr%C4%83.jpg?s=612x612&w=0&k=20&c=RN1xIh87bLJQoxvlrgkpzkLKOcy3RU1fCltjnYd6utM="
-                    alt="Indice de performanță"
-                    style="
-          width: 100%;
-    max-width: 180px;
-    margin: 15px auto;
-    display: block;
-    border-radius: 25px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    border: none;
-    transition: transform 0.3s ease;
-    "
-            />
-            <p>
-                <strong style="color: red;">Află cât de pregătit ești pentru examen!</strong><br>
-                După ce <strong>termini mediul de învățare</strong>, îți oferim un
-                <strong style="color: red;">scor personalizat</strong> care îți arată
-                <strong>șansele reale de reușită</strong> și <strong>ce mai trebuie să repeți</strong>.
-            </p>
-        </div>
-
-        <div class="testimoniale">
-            <h4>Ce spun utilizatorii:</h4>
-            <div class="comentariu">
-                <p>„După ce am parcurs mediul de învățare de două ori, am luat 25 și 26 de puncte. Am picat din prima, dar a doua oară am reușit!”</p>
-                <small>- Andreea D.</small>
-            </div>
-            <div class="comentariu">
-                <p>„Design simplu, rezultate rapide. Am trecut examenul fără stres!”</p>
-                <small>- Vlad T.</small>
-            </div>
-            <div class="comentariu">
-                <p>„Am picat la școala rutieră, dar am învățat pe site-ul ăsta cu 2 zile înainte și am luat examenul cu 25 de puncte!”</p>
-                <small>- Radu G.</small>
-            </div>
+        <div class="categories-row">
+            <a class="card btn-card" th:each="cat, iterStat : ${categories}"
+               th:classappend="${iterStat.last} ? ' center-card' : ''"
+               th:href="@{/quiz(startCategory=${cat})}">
+                <h3 th:text="${cat}">Categorie</h3>
+            </a>
         </div>
     </div>
 </div>

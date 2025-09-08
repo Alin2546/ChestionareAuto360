@@ -1,21 +1,16 @@
 package com.chestionare.chestionare360.Service;
 
-import com.chestionare.chestionare360.Model.Dto.UserCreateDto;
 import com.chestionare.chestionare360.Model.User;
 import com.chestionare.chestionare360.Repository.UserRepo;
 import com.chestionare.chestionare360.Service.SecurityService.MyUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.Optional;
-import java.util.Random;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,30 +18,41 @@ public class UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
-//    public UserDetails createUser(String email, String rawPassword) {
-//        if (userRepo.existsByEmail(email)) {
-//            throw new RuntimeException("User already exists");
-//        }
-//
-//        User newUser = new User();
-//        newUser.setEmail(email);
-//        newUser.setPassword(passwordEncoder.encode(rawPassword));
-//        newUser.setRole("ROLE_USER");
-//
-//
-//        userRepo.save(newUser);
-//        return new MyUser(newUser);
-//    }
-
-    public void resetPassword(String email, String newPassword) {
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Utilizatorul cu acest email nu a fost găsit"));
-
-        user.setPassword(passwordEncoder.encode(newPassword));
+    public void createUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        if (user.getPhoneNumber() == null || user.getPhoneNumber().isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            throw new IllegalArgumentException("Password is required");
+        }
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        user.setActive(true);
+        user.setRole("ROLE_USER");
         userRepo.save(user);
     }
 
-    public Optional<User> findByEmail(String email) {
-        return userRepo.findByEmail(email);
+    public UserDetails loginOrRegister(String phoneNumber, String rawPassword) {
+        Optional<User> optionalUser = userRepo.findByPhoneNumber(phoneNumber);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+                throw new IllegalArgumentException("Parolă greșită!");
+            }
+            return new MyUser(user);
+        } else {
+            User newUser = new User();
+            newUser.setPhoneNumber(phoneNumber);
+            newUser.setPassword(passwordEncoder.encode(rawPassword));
+            createUser(newUser);
+            return new MyUser(newUser);
+        }
+    }
+
+    public Optional<User> findByEmail(String phoneNumber) {
+        return userRepo.findByPhoneNumber(phoneNumber);
     }
 }

@@ -324,13 +324,14 @@ body, html {
 
 </header>
 
-<div class="sidebar" id="sidebar" th:fragment="sidebar">
+<div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <h2>Chestionare360</h2>
     <button id="close-btn" aria-label="Închide meniul">×</button>
   </div>
   <a th:href="@{/}">Acasă</a>
-  <a th:href="@{/login}">Autentificare</a>
+  <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare</a>
+  <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu</a>
   <a th:href="@{/learning-environment}">Mediu de învățare</a>
   <a th:href="@{/car-quizzes}">Chestionare auto</a>
   <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>

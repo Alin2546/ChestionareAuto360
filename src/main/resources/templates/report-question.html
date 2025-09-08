@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Raportează o întrebare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+body, html {
+  height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+}
+
+        header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 56px;
+            background-color: #d1e4ff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+            z-index: 1200;
+        }
+
+        #menu-toggle {
+            background-color: transparent;
+            border: none;
+            color: #004aad;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        #menu-toggle:hover {
+            background-color: #a8c3ff;
+        }
+
+        .header-text {
+            color: #004aad;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        .header-text .step-number {
+            color: #d93025;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-right: 0.25rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #004aad;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            position: fixed;
+            top: 56px; left: 0;
+            height: calc(100vh - 56px);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1100;
+        }
+        .sidebar.show { transform: translateX(0); }
+
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;
+        }
+        .sidebar-header h2 { font-size: 1.5rem; }
+
+        #close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 0.27rem 0;
+            font-size: 1.02rem;
+            display: block;
+            transition: background 0.2s;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+        }
+        .sidebar a:hover { background-color: #0066cc; }
+        .sidebar a.sustine-proiect {
+            background-color: #374151;
+            color: #f9fafb;
+            font-weight: 600;
+            text-align: center;
+            padding: 0.6rem 0.8rem;
+            margin-top: 0.2rem;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .sidebar a.sustine-proiect:hover { background-color: #1f2937; transform: scale(1.05); }
+
+        #content-wrapper {
+            flex: 1 0 auto;
+            padding-top: 56px;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+        #content-wrapper.shifted { margin-left: 250px; }
+
+        .container { max-width: 820px; margin: 0 auto; }
+
+        .card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .card h1 { text-align: center; color: #004aad; margin-bottom: 1rem; font-size: 1.6rem; }
+
+        form .form-group { margin-top: 1rem; }
+        form label { display: block; font-weight: 600; margin-bottom: 0.3rem; color: #333; }
+        form input, form textarea {
+            width: 100%; padding: 0.7rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        form textarea { resize: vertical; min-height: 90px; }
+
+        .form-footer { margin-top: 1.5rem; text-align: center; }
+        .form-footer button {
+            background: #004aad;
+            color: #fff;
+            padding: 0.9rem 2rem;
+            border: none; border-radius: 8px;
+            font-size: 1.05rem; font-weight: 600;
+            cursor: pointer;
+        }
+        .form-footer button:hover { background: #0066cc; }
+
+        footer {
+            background: #d1e4ff;
+            color: #004aad;
+            text-align: center;
+            padding: 1rem;
+            font-weight: 600;
+            box-shadow: 0 -2px 4px rgb(0 0 0 / 0.1);
+        }
+
+        @media(max-width:768px) {
+            #content-wrapper.shifted { margin-left:0; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <button id="menu-toggle">☰</button>
+    <div class="header-text">
+        <span class="step-number">1.</span> Mediu de învățare.
+        <span class="step-number">2.</span> Chestionare reale.
+        <span class="step-number">3.</span> Statistici inteligente.
+    </div>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h2>Chestionare360</h2>
+        <button id="close-btn" aria-label="Închide meniul">×</button>
+    </div>
+    <a th:href="@{/}">Acasă</a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare</a>
+    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu</a>
+    <a th:href="@{/learning-environment}">Mediu de învățare</a>
+    <a th:href="@{/car-quizzes}">Chestionare auto</a>
+    <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
+    <a th:href="@{/report-question}">Raportează o întrebare</a>
+    <a th:href="@{/faq}">Întrebări frecvente</a>
+    <a th:href="@{/driving-instructors}">Instructori auto</a>
+    <a th:href="@{/oug-195-2002}">OUG 195/2002</a>
+    <a th:href="@{/traffic-regulations}">Regulament rutier</a>
+    <a th:href="@{/terms}">Termeni și condiții</a>
+    <a th:href="@{/donate}" class="sustine-proiect">❤️ Susține proiectul</a>
+</div>
+<br>
+
+
+<div id="content-wrapper">
+    <div class="container">
+        <div class="card">
+            <h1>Raportează o întrebare</h1>
+            <form th:action="@{/report-question}" method="post">
+                <div class="form-group">
+                    <label for="question">Întrebarea întâlnită la examen:</label>
+                    <textarea id="question" name="question" required></textarea>
+                </div>
+                <div class="form-group"><label for="answerA">Varianta A:</label><input id="answerA" name="answerA"></div>
+                <div class="form-group"><label for="answerB">Varianta B:</label><input id="answerB" name="answerB"></div>
+                <div class="form-group"><label for="answerC">Varianta C:</label><input id="answerC" name="answerC"></div>
+                <div class="form-group">
+                    <label for="imageDesc">Descriere poză (dacă întrebarea avea imagine):</label>
+                    <textarea id="imageDesc" name="imageDesc" placeholder="Descrie pe scurt ce apărea în poză"></textarea>
+                </div>
+                <div class="form-group"><label for="email">Email (opțional):</label><input type="email" id="email" name="email" placeholder="ex: nume@domeniu.ro"></div>
+                <div class="form-footer"><button type="submit">Trimite raportul</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin</div>
+    <div><a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 - Program azi: 9:00 - 22:00</div>
+    <div>SRV: 1843255775 &nbsp;&nbsp; V4 &nbsp;&nbsp; V5</div>
+</footer>
+
+<script>
+    const sidebar = document.getElementById("sidebar");
+    const contentWrapper = document.getElementById("content-wrapper");
+    const menuToggle = document.getElementById("menu-toggle");
+    const closeBtn = document.getElementById("close-btn");
+
+    menuToggle.addEventListener("click", () => {
+        sidebar.classList.add("show");
+        contentWrapper.classList.add("shifted");
+    });
+
+    closeBtn.addEventListener("click", () => {
+        sidebar.classList.remove("show");
+        contentWrapper.classList.remove("shifted");
+    });
+</script>
+
+</body>
+</html>

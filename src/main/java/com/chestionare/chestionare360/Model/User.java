@@ -13,11 +13,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String email;
+    private String phoneNumber;
     private String password;
     private String role;
     private boolean isActive;
-    private String verificationCode;
+
 }
 
 

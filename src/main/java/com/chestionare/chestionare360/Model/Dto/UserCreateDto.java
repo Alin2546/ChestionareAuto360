@@ -12,9 +12,13 @@ import lombok.Setter;
 @Setter
 public class UserCreateDto {
 
-    @NotBlank(message = "Emailul este obligatoriu")
-    @Email(message = "Emailul nu este valid")
-    private String email;
+    @NotBlank(message = "Numărul de telefon este obligatoriu")
+    @Pattern(
+            regexp = "^(\\+?40|0)?7[0-9]{8}$",
+            message = "Număr de telefon invalid. Trebuie să înceapă cu 07, 407 sau +407 și să aibă 10 cifre"
+    )
+    private String phoneNumber;
+
 
     @NotBlank(message = "Parola este obligatorie")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).{8,50}$", message = "Parola trebuie sa contina cel putin o majuscula si o cifra")
@@ -25,7 +29,7 @@ public class UserCreateDto {
 
     public User mapToUser() {
         User user = new User();
-        user.setEmail(this.email);
+        user.setPhoneNumber(this.phoneNumber);
         user.setPassword(this.password);
         user.setRole(this.role);
         return user;
