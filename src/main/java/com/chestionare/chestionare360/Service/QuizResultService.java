@@ -44,7 +44,12 @@ public class QuizResultService {
         int score = 0;
 
         for (Map.Entry<String, String> entry : answers.entrySet()) {
-            Long questionId = Long.parseLong(entry.getKey());
+            String key = entry.getKey();
+            if (!key.matches("\\d+")) {
+                continue;
+            }
+
+            Long questionId = Long.parseLong(key);
             String chosenOption = entry.getValue();
 
             QuizQuestion question = quizQuestionRepository.findById(questionId)

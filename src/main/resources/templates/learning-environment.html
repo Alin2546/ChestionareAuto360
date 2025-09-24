@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chestionare Auto</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         * {
@@ -474,8 +475,12 @@
         <button id="close-btn" aria-label="Închide meniul">×</button>
     </div>
     <a th:href="@{/}">Acasă</a>
-    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare</a>
-    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu</a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">
+        Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>
+    </a>
+    <a th:href="@{/account}" sec:authorize="isAuthenticated()">
+        Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i>
+    </a>
     <a th:href="@{/learning-environment}">Mediu de învățare</a>
     <a th:href="@{/car-quizzes}">Chestionare auto</a>
     <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
@@ -497,7 +502,7 @@
         <div class="categories-row">
             <a class="card btn-card" th:each="cat, iterStat : ${categories}"
                th:classappend="${iterStat.last} ? ' center-card' : ''"
-               th:href="@{/quiz(startCategory=${cat})}">
+               th:href="@{/quiz/learning/{category}(category=${cat})}">
                 <h3 th:text="${cat}">Categorie</h3>
             </a>
         </div>

@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <title>REGULAMENT din 4 octombrie 2006
     de aplicare a Ordonanței de urgență a Guvernului nr. 195/2002 privind circulația pe drumurile publice</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; margin: 30px; line-height: 1.6; background: #f4f7fa; color: #111; }
-    h1 { text-align: center; font-size: 28px; margin-bottom: 5px; }
-    h3 { text-align: center; font-weight: normal; color: #444; margin-top: 0; }
-    .subtitle { font-weight: normal; font-size: 16px; color: #ccc; }
-    .article { margin: 20px 0; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .article h3 { margin-top: 0; color: #004080; }
-    .article p { margin: 6px 0; text-align: justify; }
-
-     * {
+    * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
 
         header {
             position: fixed;
@@ -46,19 +39,18 @@
             border-radius: 6px;
             transition: background-color 0.2s;
         }
+
         #menu-toggle:hover {
             background-color: #a8c3ff;
         }
-
 
         .header-text {
            color: #004aad;
     font-weight: 600;
     font-size: 1.2rem;
-    margin-left: auto;   /* împinge textul complet în dreapta */
+    margin-left: auto;
     padding: 0 1rem;
         }
-
 
         .sidebar {
             width: 250px;
@@ -174,7 +166,6 @@
             background-color: #0056b3;
         }
 
-
         .right-panel {
             width: 350px;
             padding: 2rem 1.5rem;
@@ -226,9 +217,8 @@
             color: #666;
         }
 
-        /* Mobile responsive */
         @media (max-width: 768px) {
-            /* Content devine coloana */
+
             .content-wrapper {
                 flex-direction: column;
                 height: auto;
@@ -243,7 +233,6 @@
                 display: block;
             }
 
-            /* Sidebar pe tot ecranul */
             .sidebar {
                 width: 250px;
                 height: calc(100vh - 56px);
@@ -299,7 +288,7 @@ body, html {
     font-weight: 600;
     text-align: center;
     padding: 0.6rem 0.8rem;
-    margin-top: 1rem;
+    margin-top: 0.2rem;
     border-radius: 8px;
     font-size: 1.05rem;
     transition: background-color 0.3s, transform 0.2s;
@@ -309,6 +298,59 @@ body, html {
     background-color: #1f2937;
     transform: scale(1.05);
 }
+
+        .sidebar a i {
+    margin-left: 0.5rem;
+}
+
+    h1 {
+    text-align: center;
+    color: #004aad;
+    font-size: 1.8rem;
+    margin: 2rem auto 1rem auto;
+    max-width: 900px;
+    line-height: 1.4;
+}
+
+h3 {
+    color: #004aad;
+    margin-bottom: 0.8rem;
+}
+
+.article {
+    background-color: #ffffff;
+    border: 1px solid #dce3f0;
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem auto;
+    max-width: 900px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    line-height: 1.6;
+    font-size: 1.05rem;
+    color: #333;
+}
+
+.article h3 {
+    font-size: 1.3rem;
+    color: #004aad;
+    border-left: 4px solid #004aad;
+    padding-left: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
+.article p {
+    margin: 0.5rem 0;
+    text-align: justify;
+}
+
+.article ul, .article ol {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.article li {
+    margin-bottom: 0.4rem;
+}
+
   </style>
 </head>
 <body>
@@ -328,7 +370,12 @@ body, html {
     <button id="close-btn" aria-label="Închide meniul">×</button>
   </div>
   <a th:href="@{/}">Acasă</a>
-  <a th:href="@{/login}">Autentificare</a>
+  <a th:href="@{/login}" sec:authorize="isAnonymous()">
+    Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>
+  </a>
+  <a th:href="@{/account}" sec:authorize="isAuthenticated()">
+    Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i>
+  </a>
   <a th:href="@{/learning-environment}">Mediu de învățare</a>
   <a th:href="@{/car-quizzes}">Chestionare auto</a>
   <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
@@ -345,7 +392,7 @@ body, html {
 <br>
 <h1>REGULAMENT din 4 octombrie 2006
   de aplicare a Ordonanței de urgență a Guvernului nr. 195/2002 privind circulația pe drumurile publice</h1>
-<h3>Prezenta hotărâre transpune în legislația națională prevederile art. 1 alin. (3) și (4), art. 2 alin. (1) lit. a) pct. (i), (ii) și (iii), lit. b) și c) și art. 5 tezele întâi, a două și a treia din Directiva 91/671/CEE a Consiliului din 16 decembrie 1991 de armonizare a legislațiilor statelor membre privind utilizarea obligatorie a centurii de siguranță în vehiculele cu o capacitate mai mică de 3,5 tone, publicată în Jurnalul Oficial, seria L, nr. 373 din 31 decembrie 1991, astfel cum a fost modificată prin Directiva 2003/20/CE a Parlamentului European și a Consiliului din 8 aprilie 2003 de modificare a Directivei 91/671/CEE a Consiliului privind apropierea legislațiilor statelor membre referitoare la utilizarea obligatorie a centurilor de siguranță în vehiculele cu masa de sub 3,5 tone și prin Directiva de punere în aplicare 2014/37/UE a Comisiei din 27 februarie 2014 de modificare a Directivei 91/671/CEE a Consiliului privind utilizarea obligatorie a centurilor de siguranță și a sistemelor de siguranță pentru copii în vehicule.</h3>
+<div class="article">Prezenta hotărâre transpune în legislația națională prevederile art. 1 alin. (3) și (4), art. 2 alin. (1) lit. a) pct. (i), (ii) și (iii), lit. b) și c) și art. 5 tezele întâi, a două și a treia din Directiva 91/671/CEE a Consiliului din 16 decembrie 1991 de armonizare a legislațiilor statelor membre privind utilizarea obligatorie a centurii de siguranță în vehiculele cu o capacitate mai mică de 3,5 tone, publicată în Jurnalul Oficial, seria L, nr. 373 din 31 decembrie 1991, astfel cum a fost modificată prin Directiva 2003/20/CE a Parlamentului European și a Consiliului din 8 aprilie 2003 de modificare a Directivei 91/671/CEE a Consiliului privind apropierea legislațiilor statelor membre referitoare la utilizarea obligatorie a centurilor de siguranță în vehiculele cu masa de sub 3,5 tone și prin Directiva de punere în aplicare 2014/37/UE a Comisiei din 27 februarie 2014 de modificare a Directivei 91/671/CEE a Consiliului privind utilizarea obligatorie a centurilor de siguranță și a sistemelor de siguranță pentru copii în vehicule.</div>
 <div class="article">ChestionareAuto360 - cel mai bun site de chestionare auto
   Ultima actualizare: 06.10.2021
   REGULAMENT din 4 octombrie 2006

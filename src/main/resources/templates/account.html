@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Contul meu</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -218,8 +219,12 @@
         <button id="close-btn" aria-label="Închide meniul">×</button>
     </div>
     <a th:href="@{/}">Acasă</a>
-    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare</a>
-    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu</a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">
+        Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>
+    </a>
+    <a th:href="@{/account}" sec:authorize="isAuthenticated()">
+        Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i>
+    </a>
     <a th:href="@{/learning-environment}">Mediu de învățare</a>
     <a th:href="@{/car-quizzes}">Chestionare auto</a>
     <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
@@ -232,24 +237,39 @@
     <a th:href="@{/donate}" class="sustine-proiect">❤️ Susține proiectul</a>
 </div>
 
-<!-- FIX: wrapper adăugat -->
 <div id="content-wrapper">
     <div class="container">
         <div class="card">
             <h2>Bun venit, <span th:text="${username}">Utilizator</span>!</h2>
             <div class="user-info">
                 <p><strong>ID utilizator:</strong> <span th:text="${userId}">1</span></p>
-                <p><strong>Abonament:</strong> <span th:text="${abonament}">Activ</span></p>
             </div>
         </div>
-
+        <form th:action="@{/logout}" method="post" style="margin-top: 0.5rem;">
+            <button type="submit"
+                    style="
+                width: 100%;
+                padding: 0.4rem 0.6rem;
+                background-color: #d93025;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            "
+                    onmouseover="this.style.backgroundColor='#b1271b'"
+                    onmouseout="this.style.backgroundColor='#d93025'">
+                Deconectare <i class="fa-solid fa-right-from-bracket" style="margin-left:0.5rem;"></i>
+            </button>
+        </form>
         <div class="card quiz-section">
             <h2>Chestionarele mele</h2>
             <div class="quiz-grid">
                 <div th:each="quiz : ${quizResults}" class="quiz-card">
-                    <p><span th:text="${quiz.title}">Chestionar</span></p>
-                    <p>Scor: <span th:text="${quiz.score}">18</span> / <span th:text="${quiz.total}">26</span></p>
-                    <p>Data: <span th:text="${#temporals.format(quiz.date, 'dd.MM.yyyy HH:mm')}">01.09.2025</span></p>
+                    <p>Chestionar categoria: <span th:text="${quiz.category}"></span></p>
+                    <p>Scor: <span th:text="${quiz.score}">18</span> / 26</p>
+                    <p>Data: <span th:text="${#temporals.format(quiz.completedAt, 'dd.MM.yyyy HH:mm')}">01.09.2025</span></p>
                 </div>
             </div>
         </div>

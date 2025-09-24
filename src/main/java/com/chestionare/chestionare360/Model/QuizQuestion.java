@@ -25,4 +25,6 @@ public class QuizQuestion {
     private String optionC;
 
     private String correctOption;
+
+    private String imageUrl;
 }

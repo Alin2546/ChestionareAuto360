@@ -1,11 +1,13 @@
 package com.chestionare.chestionare360.Controller;
 
 
+import com.chestionare.chestionare360.Model.QuizQuestion;
 import com.chestionare.chestionare360.Repository.QuizQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -26,7 +28,13 @@ public class HomeController {
     }
 
     @GetMapping("/learning-environment")
-    public String learningEnvironment() {
+    public String learningEnvironment(Model model) {
+        List<String> categories = List.of("A", "B", "C", "D", "E", "Tr", "13din15");
+
+        List<String> existingCategories = categories.stream()
+                .filter(quizQuestionRepository::existsByCategory)
+                .toList();
+        model.addAttribute("categories", categories);
         return "learning-environment";
     }
 

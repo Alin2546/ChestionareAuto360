@@ -3,6 +3,7 @@ package com.chestionare.chestionare360.Controller;
 import com.chestionare.chestionare360.Model.QuizQuestion;
 import com.chestionare.chestionare360.Repository.QuizQuestionRepository;
 import com.chestionare.chestionare360.Service.QuizResultService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,12 @@ public class QuizController {
 
     @GetMapping("/{category}")
     public String showQuiz(@PathVariable String category, Model model) {
-        List<QuizQuestion> questions = quizQuestionRepository.findByCategory(category);
+        List<QuizQuestion> questions = quizQuestionRepository.findRandomByCategory(category);
         model.addAttribute("questions", questions);
         model.addAttribute("quizName", category);
         return "quiz";
     }
+
 
     @PostMapping("/submit")
     public String submitQuiz(@RequestParam Map<String, String> answers,
@@ -39,10 +41,32 @@ public class QuizController {
 
         int finalScore = quizResultService.calculateScore(answers);
 
-        quizResultService.saveResult(principal.getName(), category, finalScore);
+        if (principal != null) {
+            quizResultService.saveResult(principal.getName(), category, finalScore);
+        }
+
+        String message;
+        if (finalScore >= 20) {
+            message = "Felicitări! Ai fost admis!";
+        } else {
+            message = "Îmi pare rău, nu ai promovat testul. Mai încearcă!";
+        }
 
         model.addAttribute("score", finalScore);
-        return "quizResult";
+        model.addAttribute("quizMessage", message);
+
+        List<QuizQuestion> questions = quizQuestionRepository.findRandomByCategory(category);
+        model.addAttribute("questions", questions);
+        model.addAttribute("quizName", category);
+
+        return "quiz";
     }
 
+    @GetMapping("/learning/{category}")
+    public String showAllLearningQuestions(@PathVariable String category, Model model) {
+        List<QuizQuestion> questions = quizQuestionRepository.findByCategory(category);
+        model.addAttribute("questions", questions);
+        model.addAttribute("quizName", category);
+        return "learning-environment-quiz";
+    }
 }

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Chestionare360 - Acasă</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
     <style>
         * {
             margin: 0;
@@ -296,6 +299,10 @@ body, html {
     background-color: #1f2937;
     transform: scale(1.05);
 }
+
+        .sidebar a i {
+    margin-left: 0.5rem;
+}
     </style>
 </head>
 <body>
@@ -315,8 +322,12 @@ body, html {
         <button id="close-btn" aria-label="Închide meniul">×</button>
     </div>
     <a th:href="@{/}">Acasă</a>
-    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare</a>
-    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu</a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">
+        Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>
+    </a>
+    <a th:href="@{/account}" sec:authorize="isAuthenticated()">
+        Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i>
+    </a>
     <a th:href="@{/learning-environment}">Mediu de învățare</a>
     <a th:href="@{/car-quizzes}">Chestionare auto</a>
     <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
@@ -338,7 +349,7 @@ body, html {
             Dacă te ajută, ajută și tu. <br>
             Fair, nu?
         </p>
-        <a th:href="@{/test/start}" class="start-button">Începe un chestionar</a>
+        <a th:href="@{/car-quizzes}" class="start-button">Începe un chestionar</a>
     </div>
 
     <div class="right-panel">
