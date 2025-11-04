@@ -5,69 +5,12 @@
     <title>Contul meu</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body,html{height:100%;font-family:'Poppins',sans-serif;background:#f5f7fa;display:flex;flex-direction:column}
-        header{position:fixed;top:0;left:0;width:100%;height:50px;background:#d1e4ff;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;box-shadow:0 2px 4px rgba(0,0,0,0.1);z-index:1200}
-        #menu-toggle{background:transparent;border:none;color:#004aad;font-size:1.8rem;cursor:pointer;padding:0.2rem 0.5rem;border-radius:6px;transition:0.2s}
-        #menu-toggle:hover{background:#a8c3ff}
-        .header-text{color:#004aad;font-weight:600;font-size:1.1rem;margin-left:auto;padding:0 1rem}
-        .header-text .step-number{color:#d93025;font-weight:700;font-size:1.2rem;margin-right:0.25rem;text-shadow:1px 1px 2px rgba(0,0,0,0.15)}
-        .sidebar{width:230px;background:#004aad;color:white;display:flex;flex-direction:column;padding:1rem;transition:transform 0.3s;position:fixed;top:50px;left:0;height:calc(100vh - 50px);transform:translateX(-100%);z-index:1000}
-        .sidebar.show{transform:translateX(0)}
-        .sidebar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem}
-        .sidebar-header h2{font-size:1.3rem}
-        #close-btn{background:transparent;border:none;color:white;font-size:1.8rem;cursor:pointer;padding:0;line-height:1}
-        .sidebar a{color:white;text-decoration:none;margin:0.2rem 0;font-size:0.95rem;display:block;padding:0.25rem 0.5rem;border-radius:6px;transition:0.2s}
-        .sidebar a:hover{background:#0066cc}
-        .sidebar a.sustine-proiect{background:#374151;color:#f9fafb;font-weight:600;text-align:center;padding:0.5rem 0.7rem;margin-top:0.2rem;border-radius:8px;font-size:0.95rem;transition:0.3s}
-        .sidebar a.sustine-proiect:hover{background:#1f2937;transform:scale(1.05)}
-        #content-wrapper{flex:1;display:flex;flex-direction:column;margin-top:50px;transition:margin-left 0.3s ease}
-        #content-wrapper.shifted{margin-left:230px}
-        .container{display:flex;gap:1rem;padding:1rem;flex:1}
-        .left-column{flex:0 0 280px;display:flex;flex-direction:column;gap:0.8rem}
-        .right-column{flex:1;display:flex;flex-direction:column;gap:0.8rem}
-        .card{background:white;padding:1rem;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,0.08);transition:0.2s}
-        .card:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,0.1)}
-        .card h3{color:#004aad;margin-bottom:0.5rem;font-size:1.1rem}
-        form button{padding:0.45rem 1rem;background:#d93025;color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:0.2s;width:auto;font-size:0.95rem}
-        form button:hover{background:#b1271b;transform:scale(1.02)}
-        .quiz-section h3{color:#004aad;margin-bottom:0.5rem;font-size:1.15rem}
-        .quiz-grid{display:flex;flex-direction:column;gap:0.6rem}
-        .quiz-card{display:flex;justify-content:space-between;align-items:center;padding:0.6rem;border-left:4px solid #004aad;border-radius:8px;background:#f9f9f9;transition:0.2s}
-        .quiz-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-        .quiz-card p{margin:0.1rem 0;color:#374151;font-size:0.9rem}
-        footer{background:#d1e4ff;color:#004aad;text-align:center;padding:0.8rem 1rem;box-shadow:0 -2px 4px rgba(0,0,0,0.1);font-weight:600;font-size:0.85rem;line-height:1.3}
-        .progress-bar{width:100%;background:#e5e7eb;border-radius:8px;overflow:hidden;height:14px;margin-top:0.3rem}
-        .progress-bar-fill{height:100%;text-align:center;color:white;font-weight:600;line-height:14px;transition:width 0.3s,background 0.3s;font-size:0.8rem}
-        .stats-card{position:relative;overflow:hidden;transition:0.3s;cursor:pointer;padding:0}
-        .stats-card.locked .stats-content{filter:blur(5px);pointer-events:none;user-select:none}
-        .stats-image-wrapper{position:relative;width:100%;height:180px;overflow:hidden;border-radius:12px 12px 0 0}
-        .stats-image{width:100%;height:100%;object-fit:cover}
-        .locked-overlay{position:absolute;inset:0;background:rgba(255,255,255,0.8);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#004aad;text-align:center;font-weight:600;padding:0.8rem}
-        .locked-overlay i{font-size:2rem;color:#004aad;margin-bottom:0.4rem}
-        .indicator{position:absolute;top:8px;left:8px;width:20px;height:20px;border-radius:50%;border:2px solid #fff}
-        .stats-info{padding:0.8rem;text-align:center}
-          @keyframes shake {
-        0% { transform: translateX(0); }
-        20% { transform: translateX(-5px); }
-        40% { transform: translateX(5px); }
-        60% { transform: translateX(-5px); }
-        80% { transform: translateX(5px); }
-        100% { transform: translateX(0); }
-    }
-    .shake {animation: shake 0.4s;}
-        .page-btn {
-    padding:0.4rem 0.8rem;
-    background:#004aad;
-    color:white;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:600;
-    transition:0.2s;
-}
-.page-btn:hover { background:#0066cc; }
-    </style>
+    <link rel="apple-touch-icon" sizes="180x180" href="/screenshots/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/screenshots/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png">
+    <link rel="manifest" href="/screenshots/site.webmanifest">
+    <link rel="stylesheet" href="/css/account.css">
+    <script src="/javascript/account.js" defer></script>
 </head>
 <body>
 <header>
@@ -225,82 +168,5 @@
     <div><a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 - Program azi: 9:00 - 22:00</div>
     <div>SRV: 1843255775 &nbsp;&nbsp; V4 &nbsp;&nbsp; V5</div>
 </footer>
-<script>
-    const sidebar = document.getElementById("sidebar");
-    const contentWrapper = document.getElementById("content-wrapper");
-    const menuToggle = document.getElementById("menu-toggle");
-    const closeBtn = document.getElementById("close-btn");
-
-    menuToggle.addEventListener("click", () => {
-        sidebar.classList.add("show");
-        contentWrapper.classList.add("shifted");
-    });
-
-    closeBtn.addEventListener("click", () => {
-        sidebar.classList.remove("show");
-        contentWrapper.classList.remove("shifted");
-    });
-
-
-    const progressFill = document.getElementById("progress-bar-fill");
-    if (progressFill) {
-        const progress = Number(progressFill.textContent.replace('%',''));
-        progressFill.style.width = progress + "%";
-
-        if(progress <= 49){
-            progressFill.style.background = "#dc2626";
-        } else if(progress <= 80){
-            progressFill.style.background = "#facc15";
-            progressFill.style.color = "#374151";
-        } else {
-            progressFill.style.background = "#16a34a";
-        }
-    }
-
-    const lockedCards = document.querySelectorAll('.stats-card.locked');
-    lockedCards.forEach(card => {
-        card.addEventListener('click', () => {
-            card.classList.remove('shake');
-            void card.offsetWidth;
-            card.classList.add('shake');
-        });
-    });
-
-  const profileInput = document.getElementById('profileImageInput');
-const profilePreview = document.getElementById('profilePreview');
-const profileUrlInput = document.getElementById('profileUrlInput');
-const profileUrlBtn = document.getElementById('profileUrlBtn');
-
-
-profileInput.addEventListener('change', () => {
-    const file = profileInput.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = e => {
-        profilePreview.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-});
-
-profileUrlBtn.addEventListener('click', async () => {
-    const url = profileUrlInput.value.trim();
-    if (!url) return alert("Introdu un URL valid!");
-
-    profilePreview.src = url;
-
-    const formData = new URLSearchParams();
-    formData.append("imageUrl", url);
-
-    const response = await fetch("/update-profile-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: formData
-    });
-
-    const text = await response.text();
-    alert(text);
-});
-</script>
 </body>
 </html>

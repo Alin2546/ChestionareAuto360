@@ -4,12 +4,10 @@ package com.chestionare.chestionare360.Controller;
 import com.chestionare.chestionare360.Model.LearningProgress;
 import com.chestionare.chestionare360.Model.QuizQuestion;
 import com.chestionare.chestionare360.Model.User;
-import com.chestionare.chestionare360.Repository.LearningProgressRepo;
 import com.chestionare.chestionare360.Repository.QuizQuestionRepository;
 import com.chestionare.chestionare360.Repository.UserRepo;
 import com.chestionare.chestionare360.Service.LearningProgressService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -30,7 +27,6 @@ public class HomeController {
     private final QuizQuestionRepository quizQuestionRepository;
     private final UserRepo userRepo;
     private final LearningProgressService learningProgressService;
-    private final LearningProgressRepo learningProgressRepo;
 
     @GetMapping
     public String homePage() {
@@ -64,7 +60,7 @@ public class HomeController {
                 long questions = quizQuestionRepository.countByCategory(progress.getCategory());
 
                 if (progress.getCurrentQuestion() >= questions) {
-                    return "learning-complete";
+                    return "html/learning-complete";
                 }
                 return "redirect:quiz/learning/" + progress.getCategory();
             }
@@ -128,5 +124,4 @@ public class HomeController {
     public String terms() {
         return "termsAndConditions";
     }
-
 }

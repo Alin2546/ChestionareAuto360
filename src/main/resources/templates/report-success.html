@@ -4,109 +4,16 @@
   <meta charset="UTF-8">
   <title>Raport trimis cu succes</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #f3f6fc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .card {
-        background: white;
-        padding: 2rem 3rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        text-align: center;
-        max-width: 500px;
-        width: 100%;
-    }
-    h1 {
-        color: #2b6cb0;
-        margin: 1rem 0;
-        font-size: 1.8rem;
-    }
-    p {
-        color: #333;
-        margin-bottom: 2rem;
-    }
-    a {
-        display: inline-block;
-        padding: 0.7rem 1.5rem;
-        background-color: #2b6cb0;
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: background 0.2s ease;
-    }
-    a:hover {
-        background-color: #1a4d80;
-    }
-
-    /* container check */
-    .animated-check {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-    }
-
-    /* inițializări pentru stroke animation */
-    .check-circle,
-    .check-mark {
-        stroke-dasharray: 314;
-        stroke-dashoffset: 314;
-        transform-origin: 50% 50%;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
-
-    /* animații */
-    @keyframes drawCircle {
-        to { stroke-dashoffset: 0; }
-    }
-    @keyframes drawCheck {
-        to { stroke-dashoffset: 0; }
-    }
-    @keyframes pop {
-        0%   { transform: scale(0.9); }
-        60%  { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-
-    .check-circle {
-        animation: drawCircle 650ms ease-out forwards;
-        animation-delay: 120ms;
-    }
-    .check-mark {
-        stroke-dasharray: 140;
-        stroke-dashoffset: 140;
-        animation: drawCheck 420ms cubic-bezier(.2,.9,.3,1) forwards;
-        animation-delay: 780ms;
-    }
-    .animated-check svg {
-        animation: pop 850ms cubic-bezier(.2,.9,.3,1);
-        animation-delay: 700ms;
-    }
-
-    /* prefer reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-        .check-circle,
-        .check-mark,
-        .animated-check svg {
-            animation: none;
-            stroke-dashoffset: 0;
-            transform: none;
-        }
-    }
-  </style>
+  <link rel="apple-touch-icon" sizes="180x180" href="/screenshots/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/screenshots/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png">
+  <link rel="manifest" href="/screenshots/site.webmanifest">
+  <link rel="stylesheet" href="/css/report-success.css">
+  <script src="/javascript/report-success.js" defer></script>
 </head>
 <body>
 <div class="card">
-  <!-- bifă animată -->
+
   <div class="animated-check" aria-hidden="true">
     <svg viewBox="0 0 120 120" width="96" height="96" role="img" aria-labelledby="checkTitle">
       <title id="checkTitle">Bifă trimis</title>
