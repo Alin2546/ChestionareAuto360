@@ -56,13 +56,6 @@ main {
     max-height: 70vh;
     overflow-y: auto;
 }
-        .question-text {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    min-height: 3rem;
-    color: #111;
-}
 
 
         .options {
@@ -80,7 +73,7 @@ label {
     padding: 1.2rem 2rem;
     font-weight: 600;
     font-size: 1.2rem;
-    color: #555;
+    color: #404040;
     transition: all 0.3s ease;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     border: none;
@@ -96,7 +89,7 @@ label {
             display: none;
         }
 
-        .option-letter {
+  .option-letter {
             width: 60px;
             height: 60px;
             border-radius: 4px;
@@ -106,11 +99,13 @@ label {
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 2rem;
             margin-right: 1rem;
             flex-shrink: 0;
             transition: background 0.3s ease;
         }
+
+
 
         input[type="checkbox"]:checked + .option-letter {
             background: #fff59d;
@@ -122,6 +117,7 @@ label {
     color: #222;
     border-color: #90caf9;
         }
+
 
         footer {
             display: flex;
@@ -222,13 +218,6 @@ button#modifyBtn:hover:not(:disabled):not(.inactive) {
     z-index: 1000;
 }
 
-.question-text {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 1.5rem auto;
-    max-width: 720px;
-    color: #111;
-}
 footer button#laterBtn,
 footer button#modifyBtn,
 footer button#submitBtn {
@@ -259,6 +248,46 @@ footer button#submitBtn {
     transform: none !important;
     box-shadow: none !important;
 }
+
+
+.question-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: -3rem auto 2rem auto;
+    padding: 1rem 1.5rem;
+    max-width: 720px;
+    color: #111;
+    text-align: center;
+    display: block;
+}
+.question-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.options {
+    flex: 1;
+}
+
+.question-image {
+    flex-shrink: 0;
+    width: 500px;
+    max-width: 100%;
+    height: 400px;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 1rem 0;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -273,7 +302,7 @@ footer button#submitBtn {
     <div>Greșite <strong id="wrongAnswers">0</strong></div>
 </header>
 
-<p class="question-text">Întrebarea 1</p>
+
 
 <div id="finalMessage" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
             justify-content:center; align-items:center; text-align:center; padding:2rem;
@@ -292,9 +321,16 @@ footer button#submitBtn {
         <input type="hidden" id="correctAnswersField" name="correctAnswers"/>
         <input type="hidden" id="wrongAnswersField" name="wrongAnswers"/>
         <input type="hidden" id="categoryField" name="category" th:value="${quizName}"/>
-        <div class="options"></div>
+
+        <p class="question-text">Intrebarea 1</p>
+
+        <div class="question-content">
+            <div class="options"></div>
+            <img id="questionImage" class="question-image" src="" alt="Imagine întrebare" style="display:none; width:400px; height:auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+        </div>
     </form>
 </main>
+
 
 <footer>
     <button type="button" id="laterBtn">
@@ -418,26 +454,30 @@ countdownInterval = setInterval(countdown, 1000);
         disableButtons();
     });
 
-    function loadQuestion(index){
+     function loadQuestion(index){
         const q = questions[index];
         questionTextEl.textContent = q.text;
-        optionsEl.innerHTML = `
-            <label>
-                <input type="checkbox" name="answer" value="A" />
-                <span class="option-letter">A</span>
-                <span>${q.optionA}</span>
-            </label>
-            <label>
-                <input type="checkbox" name="answer" value="B" />
-                <span class="option-letter">B</span>
-                <span>${q.optionB}</span>
-            </label>
-            <label>
-                <input type="checkbox" name="answer" value="C" />
-                <span class="option-letter">C</span>
-                <span>${q.optionC}</span>
-            </label>
-        `;
+        const img = document.getElementById("questionImage");
+
+        if (q.imageUrl && q.imageUrl.trim() !== "") { img.src = q.imageUrl; img.style.display = "block"; } else { img.style.display = "none"; }
+
+       optionsEl.innerHTML = `
+    <label>
+        <input type="checkbox" name="${q.id}" value="A" />
+        <span class="option-letter">A</span>
+        <span>${q.optionA}</span>
+    </label>
+    <label>
+        <input type="checkbox" name="${q.id}" value="B" />
+        <span class="option-letter">B</span>
+        <span>${q.optionB}</span>
+    </label>
+    <label>
+        <input type="checkbox" name="${q.id}" value="C" />
+        <span class="option-letter">C</span>
+        <span>${q.optionC}</span>
+    </label>
+`;
         questionsLeftEl.textContent = questions.length - currentQuestionIndex;
         disableButtons();
 
@@ -461,17 +501,23 @@ countdownInterval = setInterval(countdown, 1000);
         message = `Ai fost declarat ADMIS! Scorul tău: ${correctAnswers}/${questions.length}`;
     }
 
-    const formData = new FormData();
-    formData.append("totalQuestions", questions.length);
-    formData.append("correctAnswers", correctAnswers);
-    formData.append("wrongAnswers", wrongAnswers);
-    formData.append("category", quizName);
+     const payload = {
+        category: quizName,
+        answers: answers
+    };
 
     fetch('/quiz/submit', {
         method: 'POST',
-        body: formData,
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    }).catch(err => console.error(err));
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Rezultat salvat:", data);
+    })
+    .catch(err => console.error("Eroare la trimiterea rezultatului:", err));
 
     for (let el of document.body.children) {
         if(el.id !== "finalMessage") el.style.display = "none";
@@ -485,6 +531,7 @@ countdownInterval = setInterval(countdown, 1000);
 }
 
     let waitingForNext = false;
+    let answers = {};
 
     submitBtn.addEventListener('click', () => {
         if (!waitingForNext) {
@@ -492,6 +539,9 @@ countdownInterval = setInterval(countdown, 1000);
             if (selectedEls.length === 0) return;
 
             const selectedValues = Array.from(selectedEls).map(el => el.value);
+             const questionId = questions[currentQuestionIndex].id;
+           answers[questionId] = selectedValues.join(",");
+
             const correctValues = questions[currentQuestionIndex].correctOption.split(",");
 
             const allCheckboxes = optionsEl.querySelectorAll('input[type="checkbox"]');

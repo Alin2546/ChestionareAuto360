@@ -275,6 +275,7 @@ body, html {
 .content-wrapper {
     flex: 1 0 auto;
     padding-top: 56px;
+     position: relative;
 }
 .header-text .step-number {
     color: #d93025;
@@ -303,6 +304,52 @@ body, html {
         .sidebar a i {
     margin-left: 0.5rem;
 }
+.side-socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: -570px;
+    margin-right: 10px;
+
+}
+
+.side-socials .icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+}
+
+
+.icon.insta {
+    background: radial-gradient(circle at 30% 30%, #f9ce34, #ee2a7b, #6228d7);
+}
+
+.icon.fb {
+    background: #1877f2;
+}
+
+.icon.wa {
+    background: #25d366;
+}
+
+.icon.tw {
+    background: #1da1f2;
+}
+
+
+.side-socials .icon:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
     </style>
 </head>
 <body>
@@ -351,8 +398,15 @@ body, html {
         </p>
         <a th:href="@{/car-quizzes}" class="start-button">Începe un chestionar</a>
     </div>
+    <div class="side-socials">
+        <a href="https://www.instagram.com/chestionareauto360?utm_source=qr&igsh=OXRqZG9xMXpwaTdq " target="_blank" class="icon insta"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/username" target="_blank" class="icon fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/0751222222" target="_blank" class="icon wa"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://twitter.com/username" target="_blank" class="icon tw"><i class="fab fa-twitter"></i></a>
+    </div>
 
     <div class="right-panel">
+
         <div class="branding">
             <h3>Indice de performanță</h3>
             <img
@@ -370,7 +424,7 @@ body, html {
     "
             />
             <p>
-                <strong style="color: red;">Află cât de pregătit ești pentru examen!</strong><br>
+                <strong style="color: red;">Află cât de pregătit ești și vezi locul tău în clasamentul național 🏆</strong><br>
                 După ce <strong>termini mediul de învățare</strong>, îți oferim un
                 <strong style="color: red;">scor personalizat</strong> care îți arată
                 <strong>șansele reale de reușită</strong> și <strong>ce mai trebuie să repeți</strong>.

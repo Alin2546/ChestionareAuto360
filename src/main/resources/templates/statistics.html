@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Statistici rapide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin:0; padding:0;
+      font-family:'Poppins',sans-serif;
+      background:#f5f7fa;
+      display:flex; flex-direction:column;
+      min-height:100vh;
+    }
+    header {
+      background:#1e40af; color:white;
+      padding:1rem 2rem;
+      display:flex; justify-content:space-between; align-items:center;
+      box-shadow:0 3px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {font-size:1.5rem;}
+    .content {display:flex; justify-content:center; gap:2rem; margin:2rem 0; position:relative;}
+    .gauge-box {display:flex; flex-direction:column; align-items:center; gap:0.5rem; text-align:center; position:relative;}
+   .mask {
+  position: relative;
+  width: 220px;
+  height: 110px;
+  overflow: hidden;
+}
+.semi-circle {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  transform: rotate(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+    .gauge-value {font-size:1.5rem; font-weight:700; color:#1e40af; margin-top:1.2rem;}
+    .gauge-text {font-size:1rem; font-weight:600; color:#374151; margin-top:0.5rem;}
+    .gauge-label-left, .gauge-label-right {
+      position:absolute; top:50%; transform:translateY(-50%);
+      font-weight:600; color:#374151;
+    }
+    .gauge-label-left {left:-35px;}
+    .gauge-label-right {right:-135px;}
+    .stats-grid {display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin:2rem 0;}
+    .stats-card {background:white; padding:1rem 1.5rem; border-radius:12px; box-shadow:0 3px 10px rgba(0,0,0,0.07); width:180px; text-align:center;}
+    .stats-card h3 {margin-bottom:0.5rem; color:#004aad; font-size:1.1rem;}
+    .stats-card p {font-size:1rem; color:#374151; font-weight:600;}
+    footer {text-align:center; padding:1rem; background:#1e40af; color:white; font-weight:600; margin-top:auto;}
+
+.leaderboard-list {
+  flex: 1;
+  overflow-y: hidden;
+  padding: 1rem;
+  background: linear-gradient(180deg, #fff7ed, #fef3c7);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+
+.leaderboard-entry {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ffffff, #fffde7);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  font-size: 0.9rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.leaderboard-entry:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+.rank {
+  width: 40px;
+  text-align: center;
+  font-size: 1.3rem;
+  animation: sparkle 2s infinite;
+}
+
+.rank span {
+  display: inline-block;
+  transform-origin: center;
+}
+
+
+.leaderboard-entry:nth-child(1) .rank span,
+.leaderboard-entry:nth-child(2) .rank span,
+.leaderboard-entry:nth-child(3) .rank span {
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-5deg) scale(1.1); }
+  50% { transform: rotate(5deg) scale(1.15); }
+  75% { transform: rotate(-3deg) scale(1.1); }
+}
+
+
+.user {
+  flex: 1;
+  margin-left: 0.5rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.progress {
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.current-user {
+  background: #facc15;
+  border-left: 6px solid #b45309;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 8px rgba(250, 204, 21, 0.6); transform: scale(1); }
+  50% { box-shadow: 0 0 16px rgba(250, 204, 21, 0.9); transform: scale(1.03); }
+  100% { box-shadow: 0 0 8px rgba(250, 204, 21, 0.6); transform: scale(1); }
+}
+
+.avatar, .default-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.avatar {
+  object-fit: cover;
+}
+
+.default-avatar svg {
+  width: 32px;
+  height: 32px;
+}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Progresul tău la examen</h1>
+  <a href="/account" style="
+      background:#f59e0b;
+      color:white;
+      padding:0.4rem 0.8rem;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:600;
+      transition: background 0.3s;
+  "
+     onmouseover="this.style.background='#d97706'"
+     onmouseout="this.style.background='#f59e0b'">
+    ← Înapoi la contul tău
+  </a>
+</header>
+
+<div class="content">
+  <div class="gauge-box">
+    <div class="mask">
+      <div class="semi-circle" id="semiCircle"
+           style="background: conic-gradient(red 0deg, #e5e7eb 0deg 180deg);"></div>
+    </div>
+    <div class="gauge-value" id="gaugeValue">0%</div>
+    <div class="gauge-text" id="gaugeText">Mai ai de lucrat 💪</div>
+  </div>
+</div>
+
+<div class="leaderboard-container"
+     style="position: fixed; top: 80px; left: 0; width: 260px; height: 80vh; background: linear-gradient(180deg, #fff7ed, #fefce8); border-radius: 0 16px 16px 0; box-shadow: 2px 0 15px rgba(0,0,0,0.15); display: flex; flex-direction: column;">
+
+  <div class="leaderboard-header"
+       style="padding: 1rem; font-weight: 700; font-size: 1.4rem; text-align: center; color: #b45309; border-bottom: 2px solid #fcd34d; background: #fef3c7; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <span th:text="'Clasament categoria ' + ${category}"></span><br/>
+    <span th:if="${currentUserRank != 'N/A'}">Ești pe locul <span th:text="${currentUserRank}">7</span> 🏅</span>
+    <span th:if="${currentUserRank == 'N/A'}">Momentan nu apari în clasament 🕓</span>
+  </div>
+
+
+  <p style="margin:0; padding:0.5rem 1rem; font-size:0.85rem; color:#92400e; text-align:center; background:#fff7ed; border-bottom:1px solid #fcd34d;">
+    Click pe orice utilizator pentru a vedea statisticile acestuia 📊
+  </p>
+
+  <div th:if="${currentUserRank != 'N/A'}"
+       class="leaderboard-list"
+       id="leaderboardList"
+       style="overflow-y: hidden; flex: 1; padding: 0.5rem;">
+    <div th:each="entry, iterStat : ${leaderboard}"
+         th:classappend="${entry['isCurrentUser']} ? 'current-user' : ''"
+         class="leaderboard-entry"
+         th:attr="data-user=${entry['user'].phoneNumber}">
+
+  <span class="rank" th:switch="${iterStat.index}">
+    <span th:case="0">🏆</span>
+    <span th:case="1">🥈</span>
+    <span th:case="2">🥉</span>
+    <span th:case="*"><span th:text="${iterStat.index + 1}">1</span></span>
+  </span>
+
+      <img th:if="${entry.user.profileImageUrl != null}"
+           th:src="@{${entry.user.profileImageUrl}}"
+           alt="Avatar"
+           class="avatar">
+
+      <div th:if="${entry.user.profileImageUrl == null}" class="avatar default-avatar">
+        <svg viewBox="0 0 24 24" fill="#888" width="24" height="24">
+          <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+        </svg>
+      </div>
+
+      <span class="user" th:text="${entry['user'].phoneNumber}">Numar</span>
+      <span class="progress"
+            th:text="${#numbers.formatDecimal(entry['progressPercent'], 1, 'POINT', 2, 'POINT')} + '%'">0.00%</span>
+    </div>
+  </div>
+
+
+  <div th:if="${currentUserRank == 'N/A'}"
+       style="display:flex; align-items:center; justify-content:center; text-align:center; flex:1; padding:1rem; color:#92400e; font-weight:600;">
+    Rezolvă mai multe chestionare pentru a apărea în clasament! 🚗💨
+  </div>
+</div>
+<div class="stats-grid">
+  <div class="stats-card">
+    <h3>Chestionare finalizate</h3>
+    <p th:text="${totalQuizzes}">0</p>
+  </div>
+  <div class="stats-card">
+    <h3>Chestionare admise</h3>
+    <p th:text="${passedQuizzes}">0</p>
+  </div>
+  <div class="stats-card">
+    <h3>Chestionare respinse</h3>
+    <p th:text="${failedQuizzes}">0</p>
+  </div>
+</div>
+<footer>
+  © 2025 | Aplicație e-learning pentru DRPCIV și chestionare auto
+</footer>
+
+<div id="userModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
+  <div style="background:white; padding:2rem; border-radius:16px; width:320px; max-width:90%; position:relative; box-shadow:0 8px 30px rgba(0,0,0,0.3);">
+    <span id="closeModal" style="position:absolute; top:10px; right:15px; font-size:1.5rem; font-weight:bold; cursor:pointer;">&times;</span>
+    <h3 id="modalUser">Utilizator</h3>
+    <p>Total chestionare: <span id="modalTotal">0</span></p>
+    <p>Chestionare admise: <span id="modalPassed">0</span></p>
+    <p>Chestionare respinse: <span id="modalFailed">0</span></p>
+  </div>
+</div>
+
+<script th:inline="javascript">
+  let gaugeVal = [[${progressPercent}]];
+  const semiCircle = document.getElementById('semiCircle');
+  const gaugeValue = document.getElementById('gaugeValue');
+  const gaugeText = document.getElementById('gaugeText');
+  let currentVal = 0;
+  const maxScore = 100;
+
+  function interpolateColor(pct) {
+      const colors = [
+          { pct: 0.0, color: { r: 255, g: 0, b: 0 } },
+          { pct: 0.25, color: { r: 255, g: 127, b: 0 } },
+          { pct: 0.5, color: { r: 255, g: 215, b: 0 } },
+          { pct: 0.75, color: { r: 154, g: 205, b: 50 } },
+          { pct: 1.0, color: { r: 0, g: 176, b: 80 } }
+      ];
+      for (let i = 1; i < colors.length; i++) {
+          if (pct <= colors[i].pct) {
+              const lower = colors[i-1];
+              const upper = colors[i];
+              const range = upper.pct - lower.pct;
+              const rangePct = (pct - lower.pct) / range;
+              const r = Math.round(lower.color.r + rangePct * (upper.color.r - lower.color.r));
+              const g = Math.round(lower.color.g + rangePct * (upper.color.g - lower.color.g));
+              const b = Math.round(lower.color.b + rangePct * (upper.color.b - lower.color.b));
+              return `rgb(${r},${g},${b})`;
+          }
+      }
+      return 'rgb(0,176,80)';
+  }
+
+  function animateGauge() {
+      function step() {
+          if(currentVal < gaugeVal) {
+              currentVal += 1;
+              if(currentVal > gaugeVal) currentVal = gaugeVal;
+              const angle = (currentVal / maxScore) * 180;
+              const color = interpolateColor(currentVal / 100);
+              semiCircle.style.background = `conic-gradient(${color} 0deg ${angle}deg, #e5e7eb ${angle}deg 180deg)`;
+              gaugeValue.textContent = Math.round(currentVal) + ' %';
+              if(currentVal < 30) gaugeText.textContent = "Începe să rezolvi chestionarele! 📘";
+              else if(currentVal < 60) gaugeText.textContent = "Progres bun! Continuă să înveți! 💪";
+              else if(currentVal < 80) gaugeText.textContent = "Ești aproape pregătit! 🌟";
+              else gaugeText.textContent = "Pregătit pentru examen! 🎉";
+              requestAnimationFrame(step);
+          }
+      }
+      requestAnimationFrame(step);
+  }
+
+window.addEventListener('DOMContentLoaded', () => {
+    animateGauge();
+    const leaderboardList = document.getElementById('leaderboardList');
+    const currentUserEntry = leaderboardList.querySelector('.current-user');
+    if(currentUserEntry) {
+        const entryHeight = currentUserEntry.offsetHeight;
+        const offset = entryHeight * 8;
+
+        const scrollPos = currentUserEntry.offsetTop - offset;
+        leaderboardList.scrollTop = Math.max(0, scrollPos);
+    }
+});
+
+
+const modal = document.getElementById('userModal');
+const modalUser = document.getElementById('modalUser');
+const modalTotal = document.getElementById('modalTotal');
+const modalPassed = document.getElementById('modalPassed');
+const modalFailed = document.getElementById('modalFailed');
+const closeModal = document.getElementById('closeModal');
+
+document.querySelectorAll('.leaderboard-entry').forEach(entry => {
+    entry.addEventListener('click', () => {
+        const phone = entry.getAttribute('data-user');
+        fetch(`/statistics/user/${phone}`)
+            .then(res => res.json())
+            .then(data => {
+                modalUser.textContent = `Utilizator: ${phone}`;
+                modalTotal.textContent = data.total;
+                modalPassed.textContent = data.passed;
+                modalFailed.textContent = data.failed;
+                modal.style.display = 'flex';
+            });
+    });
+});
+
+
+closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+    if(e.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+</script>
+
+</body>
+</html>

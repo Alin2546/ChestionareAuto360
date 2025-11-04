@@ -14,8 +14,8 @@ public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Long
 
     boolean existsByCategory(String category);
 
-    @Query("SELECT DISTINCT q.category FROM QuizQuestion q")
-    List<String> findDistinctCategories();
+    @Query("SELECT COUNT(q) FROM QuizQuestion q WHERE q.category = :category")
+    long countByCategory(@Param("category") String category);
 
     @Query(value = "SELECT * FROM quiz_questions WHERE category = :category ORDER BY RANDOM() LIMIT 26", nativeQuery = true)
     List<QuizQuestion> findRandomByCategory(@Param("category") String category);

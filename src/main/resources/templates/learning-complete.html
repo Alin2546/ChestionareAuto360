@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mediul de învățare finalizat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f6f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+        h1 {
+            color: #2e7d32;
+            font-size: 28px;
+        }
+        p {
+            color: #444;
+            margin: 15px 0 30px 0;
+            font-size: 16px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .buttons form, .buttons a {
+            display: inline-block;
+        }
+        button, .btn-statistics {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+        button:hover, .btn-statistics:hover {
+            background-color: #1b5e20;
+        }
+        .btn-statistics {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1><i class="fa-solid fa-check-circle"></i> Felicitări!</h1>
+    <p>Ai terminat mediul de învățare și ai deblocat acum statisticile! Poți să vezi cât de pregătit ești și să urmărești progresul tău.</p>
+
+    <div class="buttons">
+        <form th:action="@{/reset-progress}" method="post">
+            <input type="hidden" name="category" th:value="${category}" />
+            <button type="submit">
+                <i class="fa-solid fa-rotate-right"></i> Reia mediul de învățare
+            </button>
+        </form>
+        <a th:href="@{/statistics}" class="btn-statistics">
+            <i class="fa-solid fa-chart-line"></i> Vezi statisticile
+        </a>
+    </div>
+</div>
+</body>
+</html>

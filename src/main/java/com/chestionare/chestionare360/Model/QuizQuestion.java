@@ -18,10 +18,16 @@ public class QuizQuestion {
 
     private String category;
 
+    @Column(length = 2000)
     private String text;
 
+    @Column(length = 1000)
     private String optionA;
+
+    @Column(length = 1000)
     private String optionB;
+
+    @Column(length = 1000)
     private String optionC;
 
     private String correctOption;
