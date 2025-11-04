@@ -3,7 +3,6 @@ package com.chestionare.chestionare360.Controller;
 import com.chestionare.chestionare360.Model.ReportQuestion;
 import com.chestionare.chestionare360.Repository.ReportQuestionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -12,84 +12,7 @@
     <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="/css/philanthropy.css">
     <script src="/javascript/philanthropy.js" defer></script>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: #f0f4f8;
-            padding: 20px;
-            color: #2d3436;
-        }
-        .container {
-            max-width: 600px;
-            margin: 80px auto;
-            background: white;
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        h1 {
-            font-family: 'Poppins', sans-serif;
-            color: #2c3e50;
-            margin-bottom: 16px;
-            font-size: 2rem;
-        }
-        p.description {
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-            color: #636e72;
-        }
-        .donation-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .donation-option {
-            background: #f1f2f6;
-            padding: 20px 30px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 120px;
-            border: 2px solid transparent;
-        }
-        .donation-option:hover {
-            background-color: #dfe6e9;
-            transform: scale(1.05);
-            border-color: #6c5ce7;
-        }
-        .donation-option.recommended {
-            background-color: #dfe6ff;
-            border-color: #0984e3;
-        }
-        .donation-option span.amount {
-            display: block;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #2d3436;
-        }
-        .donation-option span.label {
-            font-size: 0.9rem;
-            color: #636e72;
-        }
-        .trust-msg {
-            margin-top: 25px;
-            font-size: 0.9rem;
-            color: #8395a7;
-        }
-        a.back-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: #0984e3;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        a.back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -119,26 +42,5 @@
     <p class="trust-msg">Plata este 100% securizată prin Stripe. Nu stocăm datele cardului.</p>
     <a href="/" class="back-link">Înapoi la dashboard</a>
 </div>
-
-<script>
-    const stripe = Stripe('pk_test_51RE6Yy2Xp6cnh4OlQolvY0GKAqmd09HIU8daGndb3ADEdnKfbW2p4GdKLGjzJ3eBZpJOYJnpcdSiVu8yvJnEOKMg00JtXqXOk0');
-
- function donate(amount) {
-    fetch("/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amount })
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log("Checkout session response:", data);
-        if (!data.id) {
-            throw new Error("No session id returned from server");
-        }
-        return stripe.redirectToCheckout({ sessionId: data.id });
-    })
-    .catch(err => console.error(err));
-}
-</script>
 </body>
 </html>

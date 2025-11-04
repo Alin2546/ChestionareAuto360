@@ -131,8 +131,6 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("learning", progressOpt.orElse(null));
         model.addAttribute("progressPercent", progressPercent);
-
-        // 🟢 Trimitem pagina de chestionare
         model.addAttribute("quizPage", quizPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", quizPage.getTotalPages());
@@ -246,7 +244,7 @@ public class UserController {
 
     @GetMapping("/forgotPassword")
     public String showForgotPasswordForm() {
-        return "forgotPassword";
+        return "html/forgotPassword";
     }
 }
 
