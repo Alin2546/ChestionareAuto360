@@ -11,6 +11,12 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png">
   <link rel="manifest" href="/screenshots/site.webmanifest">
   <link rel="stylesheet" href="/css/learning-environment-quiz.css">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+        const questions = [[${questions}]];
+        const selectedCategory = [[${category}]];
+    /*]]>*/
+  </script>
   <script src="/javascript/learning-environment-quiz.js" defer></script>
 </head>
 <body>

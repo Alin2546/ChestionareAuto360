@@ -1,7 +1,3 @@
-  /*<![CDATA[*/
-    const questions = /*[[${questions}]]*/ [];
-    const quizName = /*[[${quizName}]]*/ "";
-
 
     let currentQuestionIndex = 0;
     let correctAnswers = 0;
@@ -295,4 +291,3 @@ countdownInterval = setInterval(countdown, 1000);
     });
 
     loadQuestion(currentQuestionIndex);
-    /*]]>*/

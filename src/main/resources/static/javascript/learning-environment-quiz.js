@@ -1,6 +1,3 @@
- /*<![CDATA[*/
-  const questions = /*[[${questions}]]*/ [];
-  const selectedCategory = /*[[${category}]]*/ '';
   let currentQuestionIndex = 0;
   let waitingForNext = false;
 
@@ -218,4 +215,3 @@ function nextQuestion() {
 });
   showAnswerBtn.addEventListener("click", () => showCorrectAnswers());
   loadQuestion(currentQuestionIndex);
-  /*]]>*/
