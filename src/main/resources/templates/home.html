@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ro">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chestionare360 - Acasă</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/screenshots/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/screenshots/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png">
-    <link rel="manifest" href="/screenshots/site.webmanifest">
-    <link rel="stylesheet" href="/css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/screenshots/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/screenshots/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png" />
+    <link rel="manifest" href="/screenshots/site.webmanifest" />
+    <link rel="stylesheet" href="/css/home.css" />
     <script src="/javascript/home.js" defer></script>
 </head>
-<body>
+<button id="right-panel-toggle" aria-label="Deschide informațiile">ℹ️</button>
 
+<body>
 <header>
     <button id="menu-toggle" aria-label="Deschide meniul">☰</button>
     <div class="header-text">
@@ -30,10 +33,11 @@
     </div>
     <a th:href="@{/}">Acasă</a>
     <a th:href="@{/login}" sec:authorize="isAnonymous()">
-        Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>
+        Autentificare
+        <i class="fa-solid fa-lock" style="margin-left: 0.5rem"></i>
     </a>
     <a th:href="@{/account}" sec:authorize="isAuthenticated()">
-        Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i>
+        Contul meu <i class="fa-solid fa-user" style="margin-left: 0.5rem"></i>
     </a>
     <a th:href="@{/learning-environment}">Mediu de învățare</a>
     <a th:href="@{/car-quizzes}">Chestionare auto</a>
@@ -47,70 +51,74 @@
     <a th:href="@{/donate}" class="sustine-proiect">❤️ Susține proiectul</a>
 </div>
 
-
 <div class="content-wrapper" id="content-wrapper">
     <div class="main">
         <h1>Bine ai venit!</h1>
         <p>
-            Îți oferim totul gratuit. <br>
-            Dacă te ajută, ajută și tu. <br>
+            Îți oferim totul gratuit. <br />
+            Dacă te ajută, ajută și tu. <br />
             Fair, nu?
         </p>
         <a th:href="@{/car-quizzes}" class="start-button">Începe un chestionar</a>
     </div>
     <div class="side-socials">
-        <a href="https://www.instagram.com/chestionareauto360?utm_source=qr&igsh=OXRqZG9xMXpwaTdq " target="_blank" class="icon insta"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/username" target="_blank" class="icon fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/chestionareauto360?utm_source=qr&igsh=OXRqZG9xMXpwaTdq " target="_blank"
+           class="icon insta"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/username" target="_blank" class="icon fb"><i
+                class="fab fa-facebook-f"></i></a>
         <a href="https://wa.me/0751222222" target="_blank" class="icon wa"><i class="fab fa-whatsapp"></i></a>
         <a href="https://twitter.com/username" target="_blank" class="icon tw"><i class="fab fa-twitter"></i></a>
     </div>
 
     <div class="right-panel">
-
         <div class="branding">
             <h3>Indice de performanță</h3>
-            <img
-                    src="https://media.istockphoto.com/id/2147558904/ro/vector/indicator-rotund-cu-emo%C8%9Bie-neutr%C4%83.jpg?s=612x612&w=0&k=20&c=RN1xIh87bLJQoxvlrgkpzkLKOcy3RU1fCltjnYd6utM="
-                    alt="Indice de performanță"
-                    style="
-          width: 100%;
-    max-width: 180px;
-    margin: 15px auto;
-    display: block;
-    border-radius: 25px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    border: none;
-    transition: transform 0.3s ease;
-    "
-            />
+            <img src="https://media.istockphoto.com/id/2147558904/ro/vector/indicator-rotund-cu-emo%C8%9Bie-neutr%C4%83.jpg?s=612x612&w=0&k=20&c=RN1xIh87bLJQoxvlrgkpzkLKOcy3RU1fCltjnYd6utM="
+                 alt="Indice de performanță"/>
             <p>
-                <strong style="color: red;">Află cât de pregătit ești și vezi locul tău în clasamentul național 🏆</strong><br>
+                <strong style="color: red">Află cât de pregătit ești și vezi locul tău în clasamentul
+                    național 🏆</strong><br />
                 După ce <strong>termini mediul de învățare</strong>, îți oferim un
-                <strong style="color: red;">scor personalizat</strong> care îți arată
-                <strong>șansele reale de reușită</strong> și <strong>ce mai trebuie să repeți</strong>.
+                <strong style="color: red">scor personalizat</strong> care îți arată
+                <strong>șansele reale de reușită</strong> și
+                <strong>ce mai trebuie să repeți</strong>.
             </p>
         </div>
 
         <div class="testimoniale">
             <h4>Ce spun utilizatorii:</h4>
             <div class="comentariu">
-                <p>„După ce am parcurs mediul de învățare de două ori, am luat 25 și 26 de puncte. Am picat din prima, dar a doua oară am reușit!”</p>
+                <p>
+                    „După ce am parcurs mediul de învățare de două ori, am luat 25 și
+                    26 de puncte. Am picat din prima, dar a doua oară am reușit!”
+                </p>
                 <small>- Andreea D.</small>
             </div>
             <div class="comentariu">
-                <p>„Design simplu, rezultate rapide. Am trecut examenul fără stres!”</p>
+                <p>
+                    „Design simplu, rezultate rapide. Am trecut examenul fără stres!”
+                </p>
                 <small>- Vlad T.</small>
             </div>
             <div class="comentariu">
-                <p>„Am picat la școala rutieră, dar am învățat pe site-ul ăsta cu 2 zile înainte și am luat examenul cu 25 de puncte!”</p>
+                <p>
+                    „Am picat la școala rutieră, dar am învățat pe site-ul ăsta cu 2
+                    zile înainte și am luat examenul cu 25 de puncte!”
+                </p>
                 <small>- Radu G.</small>
             </div>
         </div>
     </div>
 </div>
 <footer>
-    <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin</div>
-    <div><a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 - Program azi: 9:00 - 22:00</div>
+    <div>
+        © 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare
+        auto, realizată de Anghel Alin
+    </div>
+    <div>
+        <a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 -
+        Program azi: 9:00 - 22:00
+    </div>
     <div>SRV: 1843255775 &nbsp;&nbsp; V4 &nbsp;&nbsp; V5</div>
 </footer>
 </body>

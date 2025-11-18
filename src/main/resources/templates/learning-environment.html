@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="/css/learning-environment.css">
     <script src="/javascript/learning-environment.js" defer></script>
 </head>
+
 <body>
 
 <header>
@@ -55,18 +57,27 @@
         <div class="subtitle">Alege o categorie pentru a începe testul</div>
 
         <div class="categories-row">
-            <a class="card btn-card" th:each="cat, iterStat : ${categories}"
-               th:classappend="${iterStat.last} ? ' center-card' : ''"
+            <a class="card btn-card"
+               th:each="cat, iterStat : ${categories}"
                th:href="@{/quiz/learning/{category}(category=${cat})}">
-                <h3 th:text="${cat}">Categorie</h3>
+                <h3 th:text="${cat}"></h3>
+                <i class="fa-solid fa-motorcycle" th:if="${cat} == 'A'"></i>
+                <i class="fa-solid fa-car" th:if="${cat} == 'B'"></i>
+                <i class="fa-solid fa-truck" th:if="${cat} == 'C'"></i>
+                <i class="fa-solid fa-bus" th:if="${cat} == 'D'"></i>
+                <i class="fa-solid fa-trailer" th:if="${cat} == 'E'"></i>
+                <i class="fa-solid fa-tractor" th:if="${cat} == 'Tr'"></i>
+                <i class="fa-solid fa-medal" th:if="${cat} == '13din15'"></i>
             </a>
         </div>
     </div>
 </div>
 <footer>
-    <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin</div>
+    <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin
+    </div>
     <div><a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 - Program azi: 9:00 - 22:00</div>
     <div>SRV: 1843255775 &nbsp;&nbsp; V4 &nbsp;&nbsp; V5</div>
 </footer>
 </body>
+
 </html>

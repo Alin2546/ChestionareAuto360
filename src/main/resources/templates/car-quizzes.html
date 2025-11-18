@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chestionare Auto</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chestionare Auto</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/screenshots/apple-touch-icon.png">
@@ -16,12 +16,12 @@
 <body>
 
 <header>
-  <button id="menu-toggle" aria-label="Deschide meniul">☰</button>
-  <div class="header-text">
-    <span class="step-number">1.</span> Mediu de învățare.
-    <span class="step-number">2.</span> Chestionare reale.
-    <span class="step-number">3.</span> Statistici inteligente.
-  </div>
+    <button id="menu-toggle" aria-label="Deschide meniul">☰</button>
+    <div class="header-text">
+        <span class="step-number">1.</span> Mediu de învățare.
+        <span class="step-number">2.</span> Chestionare reale.
+        <span class="step-number">3.</span> Statistici inteligente.
+    </div>
 </header>
 
 <div class="sidebar" id="sidebar">
@@ -55,10 +55,17 @@
         <div class="subtitle">Alege o categorie pentru a începe testul</div>
 
         <div class="categories-row">
-            <a class="card btn-card" th:each="cat, iterStat : ${categories}"
-               th:classappend="${iterStat.last} ? ' center-card' : ''"
+            <a class="card btn-card"
+               th:each="cat, iterStat : ${categories}"
                th:href="@{/quiz/{category}(category=${cat})}">
-                <h3 th:text="${cat}">Categorie</h3>
+                <h3 th:text="${cat}"></h3>
+                <i class="fa-solid fa-motorcycle" th:if="${cat} == 'A'"></i>
+                <i class="fa-solid fa-car" th:if="${cat} == 'B'"></i>
+                <i class="fa-solid fa-truck" th:if="${cat} == 'C'"></i>
+                <i class="fa-solid fa-bus" th:if="${cat} == 'D'"></i>
+                <i class="fa-solid fa-trailer" th:if="${cat} == 'E'"></i>
+                <i class="fa-solid fa-tractor" th:if="${cat} == 'Tr'"></i>
+                <i class="fa-solid fa-medal" th:if="${cat} == '13din15'"></i>
             </a>
         </div>
     </div>
