@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>ChestionareAuto360</title>
@@ -9,16 +10,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/screenshots/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/screenshots/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png">
-    <link rel="manifest" href="/screenshots/site.webmanifest">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="/css/quiz.css">
     <script th:inline="javascript">
         /*<![CDATA[*/
-        const questions = [[${questions}]];
-        const quizName = [[${quizName}]];
+        const questions = [[${ questions }]];
+        const quizName = [[${ quizName }]];
         /*]]>*/
     </script>
     <script src="/javascript/quiz.js" defer></script>
 </head>
+
 <body>
 <header>
     <button class="home-btn" id="homeBtn" title="Acasă">
@@ -31,9 +33,8 @@
     <div>Greșite <strong id="wrongAnswers">0</strong></div>
 </header>
 
-
-
-<div id="finalMessage" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+<div id="finalMessage"
+     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
             justify-content:center; align-items:center; text-align:center; padding:2rem;
             font-size:2rem; font-weight:700; z-index:2000; background:#fff; color:#2e7d32; flex-direction:column; gap:2rem;">
     <p id="finalText"></p>
@@ -43,34 +44,55 @@
     </button>
 </div>
 
-
 <main>
     <form th:action="@{/quiz/submit}" method="post" id="quizForm" novalidate>
-        <input type="hidden" id="totalQuestionsField" name="totalQuestions"/>
-        <input type="hidden" id="correctAnswersField" name="correctAnswers"/>
-        <input type="hidden" id="wrongAnswersField" name="wrongAnswers"/>
-        <input type="hidden" id="categoryField" name="category" th:value="${quizName}"/>
+        <input type="hidden" id="totalQuestionsField" name="totalQuestions" />
+        <input type="hidden" id="correctAnswersField" name="correctAnswers" />
+        <input type="hidden" id="wrongAnswersField" name="wrongAnswers" />
+        <input type="hidden" id="categoryField" name="category" th:value="${quizName}" />
 
-        <p class="question-text">Intrebarea 1</p>
+        <p class="question-text">Care semn indică interdicția de a vira la stânga?</p>
+
 
         <div class="question-content">
-            <div class="options"></div>
-            <img id="questionImage" class="question-image" src="" alt="Imagine întrebare" style="display:none; width:400px; height:auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="option" value="A" />
+                    <span class="option-letter">A</span>
+                    Semnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul A
+                </label>
+                <label>
+                    <input type="checkbox" name="option" value="B" />
+                    <span class="option-letter">B</span>
+                    Semnul BSemnul ASemnul ASemnul ASemnul A
+                </label>
+                <label>
+                    <input type="checkbox" name="option" value="C" />
+                    <span class="option-letter">C</span>
+                    Semnul CSemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul
+                    ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul A
+                </label>
+            </div>
+
+            <img id="questionImage" class="question-image" src="https://scoaladrpciv.ro/storage/questions/424.jpeg"
+                 alt="Semn rutier interdicție stânga">
         </div>
     </form>
 </main>
 
-
 <footer>
-    <button type="button" id="laterBtn">
-        <i class="fa fa-rotate-left"></i> Răspunde mai târziu
-    </button>
-    <button type="button" id="modifyBtn">
-        <i class="fa fa-xmark"></i> Modifică răspunsul
-    </button>
+    <div class="row-top">
+        <button type="button" id="laterBtn">
+            <i class="fa fa-rotate-left"></i> RĂSPUNDE MAI TÂRZIU
+        </button>
+        <button type="button" id="modifyBtn">
+            <i class="fa fa-xmark"></i> MODIFICĂ RĂSPUNSUL
+        </button>
+    </div>
     <button type="button" id="submitBtn">
-        <i class="fa fa-check"></i> Trimite răspunsul
+        <i class="fa fa-check"></i> TRIMITE RĂSPUNSUL
     </button>
 </footer>
+
 </body>
 </html>

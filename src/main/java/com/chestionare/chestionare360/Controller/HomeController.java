@@ -60,7 +60,7 @@ public class HomeController {
                 long questions = quizQuestionRepository.countByCategory(progress.getCategory());
 
                 if (progress.getCurrentQuestion() >= questions) {
-                    return "html/learning-complete";
+                    return "learning-complete";
                 }
                 return "redirect:quiz/learning/" + progress.getCategory();
             }

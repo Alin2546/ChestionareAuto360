@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta charset="UTF-8">
   <title>Statistici rapide</title>
@@ -9,23 +10,17 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/screenshots/favicon-16x16.png">
   <link rel="manifest" href="/screenshots/site.webmanifest">
   <link rel="stylesheet" href="/css/statistics.css">
+  <script th:inline="javascript">
+    let gaugeVal = [[${progressPercent}]];
+  </script>
   <script src="/javascript/statistics.js" defer></script>
 </head>
-<body>
 
+<body>
 <header>
   <h1>Progresul tău la examen</h1>
-  <a href="/account" style="
-      background:#f59e0b;
-      color:white;
-      padding:0.4rem 0.8rem;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:600;
-      transition: background 0.3s;
-  "
-     onmouseover="this.style.background='#d97706'"
-     onmouseout="this.style.background='#f59e0b'">
+
+  <a href="/account" class="back-account-btn">
     ← Înapoi la contul tău
   </a>
 </header>
@@ -33,53 +28,49 @@
 <div class="content">
   <div class="gauge-box">
     <div class="mask">
-      <div class="semi-circle" id="semiCircle"
-           style="background: conic-gradient(red 0deg, #e5e7eb 0deg 180deg);"></div>
+      <div class="semi-circle" id="semiCircle"></div>
     </div>
+
     <div class="gauge-value" id="gaugeValue">0%</div>
-    <div class="gauge-text" id="gaugeText">Mai ai de lucrat 💪</div>
+    <div class="gauge-text" id="gaugeText">Mai ai de lucrat!</div>
   </div>
 </div>
 
-<div class="leaderboard-container"
-     style="position: fixed; top: 80px; left: 0; width: 260px; height: 80vh; background: linear-gradient(180deg, #fff7ed, #fefce8); border-radius: 0 16px 16px 0; box-shadow: 2px 0 15px rgba(0,0,0,0.15); display: flex; flex-direction: column;">
-
-  <div class="leaderboard-header"
-       style="padding: 1rem; font-weight: 700; font-size: 1.4rem; text-align: center; color: #b45309; border-bottom: 2px solid #fcd34d; background: #fef3c7; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <span th:text="'Clasament categoria ' + ${category}"></span><br/>
-    <span th:if="${currentUserRank != 'N/A'}">Ești pe locul <span th:text="${currentUserRank}">7</span> 🏅</span>
-    <span th:if="${currentUserRank == 'N/A'}">Momentan nu apari în clasament 🕓</span>
+<div class="leaderboard-container">
+  <div class="leaderboard-header">
+    <span th:text="'Clasament categoria ' + ${category}"></span><br />
+    <span th:if="${currentUserRank != 'N/A'}">
+                Ești pe locul <span th:text="${currentUserRank}">7</span> 🏅
+            </span>
+    <span th:if="${currentUserRank == 'N/A'}">
+                Momentan nu apari în clasament 🕓
+            </span>
   </div>
 
-
-  <p style="margin:0; padding:0.5rem 1rem; font-size:0.85rem; color:#92400e; text-align:center; background:#fff7ed; border-bottom:1px solid #fcd34d;">
+  <p class="leaderboard-instruction">
     Click pe orice utilizator pentru a vedea statisticile acestuia 📊
   </p>
 
-  <div th:if="${currentUserRank != 'N/A'}"
-       class="leaderboard-list"
-       id="leaderboardList"
+  <div th:if="${currentUserRank != 'N/A'}" class="leaderboard-list" id="leaderboardList"
        style="overflow-y: hidden; flex: 1; padding: 0.5rem;">
     <div th:each="entry, iterStat : ${leaderboard}"
-         th:classappend="${entry['isCurrentUser']} ? 'current-user' : ''"
-         class="leaderboard-entry"
+         th:classappend="${entry['isCurrentUser']} ? 'current-user' : ''" class="leaderboard-entry"
          th:attr="data-user=${entry['user'].phoneNumber}">
 
-  <span class="rank" th:switch="${iterStat.index}">
-    <span th:case="0">🏆</span>
-    <span th:case="1">🥈</span>
-    <span th:case="2">🥉</span>
-    <span th:case="*"><span th:text="${iterStat.index + 1}">1</span></span>
-  </span>
+                <span class="rank" th:switch="${iterStat.index}">
+                    <span th:case="0">🏆</span>
+                    <span th:case="1">🥈</span>
+                    <span th:case="2">🥉</span>
+                    <span th:case="*"><span th:text="${iterStat.index + 1}">1</span></span>
+                </span>
 
-      <img th:if="${entry.user.profileImageUrl != null}"
-           th:src="@{${entry.user.profileImageUrl}}"
-           alt="Avatar"
-           class="avatar">
+      <img th:if="${entry.user.profileImageUrl != null}" th:src="@{${entry.user.profileImageUrl}}"
+           alt="Avatar" class="avatar">
 
       <div th:if="${entry.user.profileImageUrl == null}" class="avatar default-avatar">
         <svg viewBox="0 0 24 24" fill="#888" width="24" height="24">
-          <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+          <path
+                  d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
         </svg>
       </div>
 
@@ -89,11 +80,10 @@
     </div>
   </div>
 
-
-  <div th:if="${currentUserRank == 'N/A'}"
-       style="display:flex; align-items:center; justify-content:center; text-align:center; flex:1; padding:1rem; color:#92400e; font-weight:600;">
+  <div th:if="${currentUserRank == 'N/A'}" class="no-rank-message">
     Rezolvă mai multe chestionare pentru a apărea în clasament! 🚗💨
   </div>
+
 </div>
 <div class="stats-grid">
   <div class="stats-card">
@@ -113,14 +103,15 @@
   © 2025 | Aplicație e-learning pentru DRPCIV și chestionare auto
 </footer>
 
-<div id="userModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
-  <div style="background:white; padding:2rem; border-radius:16px; width:320px; max-width:90%; position:relative; box-shadow:0 8px 30px rgba(0,0,0,0.3);">
-    <span id="closeModal" style="position:absolute; top:10px; right:15px; font-size:1.5rem; font-weight:bold; cursor:pointer;">&times;</span>
+<div id="userModal" class="user-modal">
+  <div class="user-modal-content">
+    <span id="closeModal" class="close-modal">&times;</span>
     <h3 id="modalUser">Utilizator</h3>
     <p>Total chestionare: <span id="modalTotal">0</span></p>
     <p>Chestionare admise: <span id="modalPassed">0</span></p>
     <p>Chestionare respinse: <span id="modalFailed">0</span></p>
   </div>
 </div>
+
 </body>
 </html>

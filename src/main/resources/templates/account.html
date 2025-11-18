@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <title>Contul meu</title>
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="/css/account.css">
     <script src="/javascript/account.js" defer></script>
 </head>
+
 <body>
 <header>
     <button id="menu-toggle" aria-label="Deschide meniul">☰</button>
@@ -27,8 +29,10 @@
         <button id="close-btn" aria-label="Închide meniul">×</button>
     </div>
     <a th:href="@{/}">Acasă</a>
-    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i></a>
-    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i></a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare <i class="fa-solid fa-lock"
+                                                                          style="margin-left:0.5rem;"></i></a>
+    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu <i class="fa-solid fa-user"
+                                                                             style="margin-left:0.5rem;"></i></a>
     <a th:href="@{/learning-environment}">Mediu de învățare</a>
     <a th:href="@{/car-quizzes}">Chestionare auto</a>
     <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
@@ -44,26 +48,26 @@
     <div class="container">
         <div class="left-column">
 
-            <div class="card profile-card" style="display:flex;align-items:center;gap:0.8rem;justify-content:flex-start; padding:0.5rem 1rem;">
-
-                <div style="position:relative; width:60px; height:60px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:#e5e7eb; box-shadow:0 2px 6px rgba(0,0,0,0.2); overflow:visible;">
-                    <i id="defaultIcon" class="fa-solid fa-user" th:if="${user.profileImageUrl == null}" style="font-size:1.5rem; color:#004aad;"></i>
-                    <img id="profilePreview" th:if="${user.profileImageUrl != null}" th:src="${user.profileImageUrl}" alt="Profil" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
-                    <label for="profileImageInput" style="position:absolute; bottom:-5px; right:-5px; background:#facc15; color:#004aad; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:2px solid #fff; z-index:10; font-size:0.65rem;">
+            <div class="card profile-card">
+                <div class="profile-image-wrapper">
+                    <i id="defaultIcon" class="fa-solid fa-user" th:if="${user.profileImageUrl == null}"></i>
+                    <img id="profilePreview" th:if="${user.profileImageUrl != null}"
+                         th:src="${user.profileImageUrl}" alt="Profil">
+                    <label for="profileImageInput" class="edit-icon">
                         <i class="fa-solid fa-pencil"></i>
                     </label>
-                    <input type="file" id="profileImageInput" accept="image/*" style="display:none;">
+                    <input type="file" id="profileImageInput" accept="image/*">
                 </div>
 
-                <div style="display:flex; flex-direction:column; gap:0.2rem; flex:1;">
-                    <h4 style="margin:0; font-size:1rem; color:#004aad;">Bun venit, <span th:text="${username}">Utilizator</span>!</h4>
-                    <div style="display:flex; gap:0.4rem; align-items:center;">
-                        <input type="text" id="profileUrlInput" placeholder="Introdu URL imagine"
-                               style="flex:1; padding:0.3rem 0.5rem; border-radius:6px; border:1px solid #ccc; font-size:0.85rem;">
-                        <button id="profileUrlBtn" style="padding:0.3rem 0.6rem; border:none; border-radius:6px; background:#004aad; color:white; font-size:0.85rem; cursor:pointer;">Setează</button>
+                <div class="profile-info">
+                    <h4>Bun venit, <span th:text="${username}">Utilizator</span>!</h4>
+                    <div class="profile-url-input">
+                        <input type="text" id="profileUrlInput" placeholder="Introdu URL imagine">
+                        <button id="profileUrlBtn">Setează</button>
                     </div>
                 </div>
             </div>
+
 
             <div class="card" th:if="${learning != null}">
                 <h3>Mediu de învățare</h3>
@@ -72,8 +76,7 @@
                 </p>
                 <div class="progress-bar">
                     <div class="progress-bar-fill" id="progress-bar-fill"
-                         th:style="'width:' + ${progressPercent} + '%'"
-                         th:text="${progressPercent + '%'}">
+                         th:style="'width:' + ${progressPercent} + '%'" th:text="${progressPercent + '%'}">
                     </div>
                 </div>
 
@@ -108,7 +111,9 @@
                  th:classappend="${!user.hasCompletedLearningEnvironment} ? 'locked' : 'unlocked'"
                  th:onclick="${user.hasCompletedLearningEnvironment} ? 'window.location.href=\'/statistics\'' : ''">
                 <div class="stats-image-wrapper">
-                    <div class="indicator" th:style="'background:' + (${progressPercent <= 49} ? '#dc2626' : (${progressPercent <= 80} ? '#facc15' : '#16a34a'))"></div>
+                    <div class="indicator"
+                         th:style="'background:' + (${progressPercent <= 49} ? '#dc2626' : (${progressPercent <= 80} ? '#facc15' : '#16a34a'))">
+                    </div>
                     <img src="https://media.istockphoto.com/id/2147558904/ro/vector/indicator-rotund-cu-emo%C8%9Bie-neutr%C4%83.jpg?s=612x612&w=0&k=20&c=RN1xIh87bLJQoxvlrgkpzkLKOcy3RU1fCltjnYd6utM="
                          alt="Indicator progres" class="stats-image">
                     <div class="locked-overlay" th:if="${!user.hasCompletedLearningEnvironment}">
@@ -123,7 +128,8 @@
             </div>
 
             <form th:action="@{/logout}" method="post" style="text-align:center;">
-                <button type="submit"><i class="fa-solid fa-right-from-bracket" style="margin-right:0.3rem;"></i> Deconectare</button>
+                <button type="submit"><i class="fa-solid fa-right-from-bracket" style="margin-right:0.3rem;"></i>
+                    Deconectare</button>
             </form>
         </div>
         <div class="right-column">
@@ -139,24 +145,26 @@
                             <p>
                                 <strong>Scor:</strong>
                                 <span th:text="${quiz.score}">18</span>/26
-                                <span th:if="${quiz.score >= 22}" style="color:green;font-weight:600;margin-left:8px;">Admis ✅</span>
-                                <span th:if="${quiz.score < 22}" style="color:red;font-weight:600;margin-left:8px;">Respins ❌</span>
+                                <span th:if="${quiz.score >= 22}"
+                                      style="color:green;font-weight:600;margin-left:8px;">Admis ✅</span>
+                                <span th:if="${quiz.score < 22}"
+                                      style="color:red;font-weight:600;margin-left:8px;">Respins ❌</span>
                             </p>
                         </div>
-                        <div class="quiz-date" th:text="${#temporals.format(quiz.completedAt, 'dd.MM.yyyy HH:mm')}">01.09.2025</div>
+                        <div class="quiz-date" th:text="${#temporals.format(quiz.completedAt, 'dd.MM.yyyy HH:mm')}">
+                            01.09.2025</div>
                     </div>
                 </div>
 
 
-                <div class="pagination" style="display:flex;justify-content:center;align-items:center;margin-top:1rem;gap:0.5rem;">
-                    <a th:if="${currentPage > 0}"
-                       th:href="@{/account(page=${currentPage - 1})}"
-                       class="page-btn">◀ Înapoi</a>
+                <div class="pagination"
+                     style="display:flex;justify-content:center;align-items:center;margin-top:1rem;gap:0.5rem;">
+                    <a th:if="${currentPage > 0}" th:href="@{/account(page=${currentPage - 1})}" class="page-btn">◀
+                        Înapoi</a>
 
                     <span th:text="'Pagina ' + (${currentPage + 1}) + ' din ' + ${totalPages}"></span>
 
-                    <a th:if="${currentPage + 1 < totalPages}"
-                       th:href="@{/account(page=${currentPage + 1})}"
+                    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/account(page=${currentPage + 1})}"
                        class="page-btn">Înainte ▶</a>
                 </div>
             </div>
@@ -164,9 +172,11 @@
     </div>
 </div>
 <footer>
-    <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin</div>
+    <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin
+    </div>
     <div><a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 - Program azi: 9:00 - 22:00</div>
     <div>SRV: 1843255775 &nbsp;&nbsp; V4 &nbsp;&nbsp; V5</div>
 </footer>
 </body>
+
 </html>

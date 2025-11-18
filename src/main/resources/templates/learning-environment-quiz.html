@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>ChestionareAuto360</title>
@@ -13,72 +14,75 @@
   <link rel="stylesheet" href="/css/learning-environment-quiz.css">
   <script th:inline="javascript">
     /*<![CDATA[*/
-        const questions = [[${questions}]];
-        const selectedCategory = [[${category}]];
+    const questions = [[${ questions }]];
+    const selectedCategory = [[${ category }]];
     /*]]>*/
   </script>
   <script src="/javascript/learning-environment-quiz.js" defer></script>
 </head>
+
 <body>
 
-<header style="display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
-
-  <div style="display:flex; align-items:center; gap:1rem;">
+<header class="top-header">
+  <div class="header-left">
     <button class="home-btn" id="homeBtn" title="Acasă">
       <i class="fa fa-home"></i>
     </button>
-    <div style="display:flex; flex-direction:column; align-items:center;">
-      <div style="font-size:1.3rem; font-weight:600;">ChestionareAuto360.ro</div>
-      <img src="/screenshots/ChestionareAuto360Logo.png" alt="Logo" style="max-height:40px; margin-top:0.3rem;">
+
+    <div class="brand-box">
+      <div class="brand-title">ChestionareAuto360.ro</div>
+      <img src="/screenshots/ChestionareAuto360Logo.png" alt="Logo">
     </div>
-    <div style="font-size:1rem; color:#555; text-align:center; margin-left:1rem;">
-      Categoria<br>
-      <strong style="font-size:2.5rem; display:block;">B</strong>
+
+    <div class="category-box">
+      Categoria
+      <strong>B</strong>
     </div>
   </div>
 
-  <div id="wrongMessage" style="display:flex; align-items:center; justify-content:center; background:#d32f2f; color:white; font-weight:700; border-radius:8px; padding:0.5rem 1rem; font-size:1.3rem; min-width:120px; display:none;">
-    <i class="fa fa-times-circle" style="margin-right:0.5rem;"></i> GRESIT!
+  <div id="wrongMessage" class="wrong-message">
+    <i class="fa fa-times-circle"></i> GRESIT!
   </div>
 
-  <div style="display:flex; gap:2rem; align-items:center;">
-    <div style="display:flex; flex-direction:column; align-items:center;">Întrebări totale
-      <strong id="totalQuestions"></strong>
-    </div>
-    <div style="display:flex; flex-direction:column; align-items:center;">Întrebări rămase
-      <strong id="questionsLeft"></strong>
-    </div>
+  <div class="header-right">
+    <div>Întrebări totale <strong id="totalQuestions">3</strong></div>
+    <div>Întrebări rămase <strong id="questionsLeft">2</strong></div>
   </div>
-
 </header>
 
 
-
-<div id="finalMessage" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-            justify-content:center; align-items:center; text-align:center; padding:2rem;
-            font-size:2rem; font-weight:700; z-index:2000; background:#fff; color:#2e7d32; flex-direction:column; gap:2rem;">
+<div id="finalMessage" class="final-message">
   <p id="finalText"></p>
-  <button onclick="window.location.href='/'"
-          style="font-size:3rem; color:#1c7ed6; background:transparent; border:none; cursor:pointer;">
+
+  <button onclick="window.location.href='/'" class="final-home-btn">
     <i class="fa fa-home"></i>
   </button>
 </div>
 
+
 <main>
   <p class="question-text">Întrebarea 1</p>
 
-  <div class="question-container" style="display:flex; gap:2rem; align-items:flex-start;">
-    <div class="options" style="flex:1;"></div>
-    <img id="questionImage" class="question-image" src="" alt="Imagine întrebare" style="display:none; width:400px; height:auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+  <div class="question-container">
+    <div class="options"></div>
+
+    <img id="questionImage" class="question-image" src="" alt="Imagine întrebare">
   </div>
 </main>
 
 <footer>
-  <button type="button" id="laterBtn"><i class="fa fa-rotate-left"></i> Arată răspunsul</button>
-  <button type="button" id="modifyBtn"><i class="fa fa-xmark"></i> Modifică răspunsul</button>
-  <button type="button" id="submitBtn"><i class="fa fa-check"></i> Trimite răspunsul</button>
+  <div class="row-top">
+    <button type="button" id="laterBtn">
+      <i class="fa fa-rotate-left"></i> ARATA RASPUNSUL
+    </button>
+    <button type="button" id="modifyBtn">
+      <i class="fa fa-xmark"></i> MODIFICĂ RĂSPUNSUL
+    </button>
+  </div>
+  <button type="button" id="submitBtn">
+    <i class="fa fa-check"></i> TRIMITE RĂSPUNSUL
+  </button>
 </footer>
-
 
 <div id="finalModal" class="final-modal">
   <div class="final-modal-content">
@@ -88,12 +92,11 @@
       Felicitări!<br>
       Acum poți să afli cât de pregătit ești cu adevărat pentru examenul tău
     </p>
-
-
     <a th:href="@{/account}" class="btn-account">
       <i class="fa-solid fa-user"></i> Mergi la contul tău
     </a>
   </div>
 </div>
 </body>
+
 </html>
