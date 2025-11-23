@@ -25,7 +25,9 @@
     ← Înapoi la contul tău
   </a>
 </header>
-
+<button id="showLeaderboardBtn" style="margin:20px auto; padding:10px 20px; border-radius:10px; font-size:16px; cursor:pointer;">
+  Vezi Clasamentul
+</button>
 <div class="content">
   <div class="gauge-box">
     <div class="mask">
@@ -36,6 +38,25 @@
     <div class="gauge-text" id="gaugeText">Mai ai de lucrat!</div>
   </div>
 </div>
+<div class="stats-grid">
+  <div class="stats-card">
+    <h3>Chestionare finalizate</h3>
+    <p th:text="${totalQuizzes}">0</p>
+  </div>
+  <div class="stats-card">
+    <h3>Chestionare admise</h3>
+    <p th:text="${passedQuizzes}">0</p>
+  </div>
+  <div class="stats-card">
+    <h3>Chestionare respinse</h3>
+    <p th:text="${failedQuizzes}">0</p>
+  </div>
+</div>
+
+<footer>
+  © 2025 | Aplicație e-learning pentru DRPCIV și chestionare auto
+</footer>
+
 
 <div class="leaderboard-container">
   <div class="leaderboard-header">
@@ -86,23 +107,8 @@
   </div>
 
 </div>
-<div class="stats-grid">
-  <div class="stats-card">
-    <h3>Chestionare finalizate</h3>
-    <p th:text="${totalQuizzes}">0</p>
-  </div>
-  <div class="stats-card">
-    <h3>Chestionare admise</h3>
-    <p th:text="${passedQuizzes}">0</p>
-  </div>
-  <div class="stats-card">
-    <h3>Chestionare respinse</h3>
-    <p th:text="${failedQuizzes}">0</p>
-  </div>
-</div>
-<footer>
-  © 2025 | Aplicație e-learning pentru DRPCIV și chestionare auto
-</footer>
+
+
 
 <div id="userModal" class="user-modal">
   <div class="user-modal-content">

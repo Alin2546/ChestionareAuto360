@@ -1,3 +1,4 @@
+
 const semiCircle = document.getElementById('semiCircle');
 const gaugeValue = document.getElementById('gaugeValue');
 const gaugeText = document.getElementById('gaugeText');
@@ -48,47 +49,62 @@ function animateGauge() {
 
 window.addEventListener('DOMContentLoaded', () => {
     animateGauge();
+
     const leaderboardList = document.getElementById('leaderboardList');
-    const currentUserEntry = leaderboardList.querySelector('.current-user');
-    if (currentUserEntry) {
-        const entryHeight = currentUserEntry.offsetHeight;
-        const offset = entryHeight * 8;
-
-        const scrollPos = currentUserEntry.offsetTop - offset;
-        leaderboardList.scrollTop = Math.max(0, scrollPos);
+    if (leaderboardList) {
+        const currentUserEntry = leaderboardList.querySelector('.current-user');
+        if (currentUserEntry) {
+            const entryHeight = currentUserEntry.offsetHeight;
+            const offset = entryHeight * 8;
+            const scrollPos = currentUserEntry.offsetTop - offset;
+            leaderboardList.scrollTop = Math.max(0, scrollPos);
+        }
     }
-});
 
+    const modal = document.getElementById('userModal');
+    const modalUser = document.getElementById('modalUser');
+    const modalTotal = document.getElementById('modalTotal');
+    const modalPassed = document.getElementById('modalPassed');
+    const modalFailed = document.getElementById('modalFailed');
+    const closeModal = document.getElementById('closeModal');
 
-const modal = document.getElementById('userModal');
-const modalUser = document.getElementById('modalUser');
-const modalTotal = document.getElementById('modalTotal');
-const modalPassed = document.getElementById('modalPassed');
-const modalFailed = document.getElementById('modalFailed');
-const closeModal = document.getElementById('closeModal');
-
-document.querySelectorAll('.leaderboard-entry').forEach(entry => {
-    entry.addEventListener('click', () => {
-        const phone = entry.getAttribute('data-user');
-        fetch(`/statistics/user/${phone}`)
-            .then(res => res.json())
-            .then(data => {
-                modalUser.textContent = `Utilizator: ${phone}`;
-                modalTotal.textContent = data.total;
-                modalPassed.textContent = data.passed;
-                modalFailed.textContent = data.failed;
-                modal.style.display = 'flex';
-            });
+    document.querySelectorAll('.leaderboard-entry').forEach(entry => {
+        entry.addEventListener('click', () => {
+            const phone = entry.getAttribute('data-user');
+            fetch(`/statistics/user/${phone}`)
+                .then(res => res.json())
+                .then(data => {
+                    modalUser.textContent = `Utilizator: ${phone}`;
+                    modalTotal.textContent = data.total;
+                    modalPassed.textContent = data.passed;
+                    modalFailed.textContent = data.failed;
+                    modal.style.display = 'flex';
+                });
+        });
     });
-});
 
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
 
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
+    const showBtn = document.getElementById('showLeaderboardBtn');
+    const leaderboard = document.querySelector('.leaderboard-container');
 
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
+    if (showBtn && leaderboard) {
+        if (window.innerWidth <= 575.98) {
+            leaderboard.style.display = 'none';
+        }
+
+        showBtn.addEventListener('click', () => {
+            if (leaderboard.style.display === 'none') {
+                leaderboard.style.display = 'block';
+                showBtn.textContent = 'Ascunde Clasamentul';
+            } else {
+                leaderboard.style.display = 'none';
+                showBtn.textContent = 'Vezi Clasamentul';
+            }
+        });
     }
 });
