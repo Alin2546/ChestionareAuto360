@@ -1,4 +1,4 @@
-const stripe = Stripe('pk_test_51RE6Yy2Xp6cnh4OlQolvY0GKAqmd09HIU8daGndb3ADEdnKfbW2p4GdKLGjzJ3eBZpJOYJnpcdSiVu8yvJnEOKMg00JtXqXOk0');
+const stripe = Stripe('pk_live_51RE6YoFaV5Kx4nqr3WpvqqaZNXmaTZIGydvogZDFlrzDtyYEJOkqGVFNTePGDNaM8nfgWAdtKbvRJlOTOdwL0CLn00TuFjKT3h');
 
 function donate(amount) {
     fetch("/create-checkout-session", {
