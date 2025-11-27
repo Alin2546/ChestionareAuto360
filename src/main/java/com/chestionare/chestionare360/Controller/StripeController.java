@@ -24,8 +24,8 @@ public class StripeController {
     @Value("${stripe.secret.key}")
     private String stripeSecretKey;
 
-    private static final String SUCCESS_URL = "http://localhost:8080/donation/success?session_id={CHECKOUT_SESSION_ID}";
-    private static final String CANCEL_URL = "http://localhost:8080/donation/cancel";
+    private static final String SUCCESS_URL = "https://chestionareauto360.onrender.com/donation/success?session_id={CHECKOUT_SESSION_ID}";
+    private static final String CANCEL_URL = "http://chestionareauto360.onrender.com/donation/cancel";
 
     @PostMapping("/create-checkout-session")
     @ResponseBody
