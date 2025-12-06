@@ -34,16 +34,13 @@
     <div>Greșite <strong id="wrongAnswers">0</strong></div>
 </header>
 
-<div id="finalMessage"
-     style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-            justify-content:center; align-items:center; text-align:center; padding:2rem;
-            font-size:2rem; font-weight:700; z-index:2000; background:#fff; color:#2e7d32; flex-direction:column; gap:2rem;">
+<div id="finalMessage">
     <p id="finalText"></p>
-    <button onclick="window.location.href='/'"
-            style="font-size:3rem; color:#1c7ed6; background:transparent; border:none; cursor:pointer;">
+    <button id="homeButton" onclick="window.location.href='/'">
         <i class="fa fa-home"></i>
     </button>
 </div>
+
 
 <main>
     <form th:action="@{/quiz/submit}" method="post" id="quizForm" novalidate>

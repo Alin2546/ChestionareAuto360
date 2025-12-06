@@ -65,7 +65,8 @@
         <div class="categories-row">
             <a class="card btn-card"
                th:each="cat, iterStat : ${categories}"
-               th:href="@{/quiz/{category}(category=${cat})}">
+               th:href="@{/quiz/{category}(category=${cat})}"
+               th:classappend="${cat} == 'Tr' ? ' unavailable'">
                 <h3 th:text="${cat}"></h3>
                 <i class="fa-solid fa-motorcycle" th:if="${cat} == 'A'"></i>
                 <i class="fa-solid fa-car" th:if="${cat} == 'B'"></i>
@@ -74,10 +75,12 @@
                 <i class="fa-solid fa-trailer" th:if="${cat} == 'E'"></i>
                 <i class="fa-solid fa-tractor" th:if="${cat} == 'Tr'"></i>
                 <i class="fa-solid fa-medal" th:if="${cat} == '13din15'"></i>
+                <i class="fa-solid fa-lock chains-icon" th:if="${cat} == 'Tr'"></i>
             </a>
         </div>
     </div>
 </div>
+
 <footer>
     <div>© 2025 | Aplicație e-learning (v.5) pentru examen DRPCIV și chestionare auto, realizată de Anghel Alin</div>
     <div><a href="/terms">Termeni și condiții</a> | Contact: 0751-222-222 - Program azi: 9:00 - 22:00</div>
