@@ -244,7 +244,7 @@ public class UserController {
 
     @GetMapping("/forgotPassword")
     public String showForgotPasswordForm() {
-        return "html/forgotPassword";
+        return "forgotPassword";
     }
 }
 
