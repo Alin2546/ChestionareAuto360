@@ -299,9 +299,10 @@
      background: #1877f2;
  }
 
- .icon.wa {
-     background: #25d366;
- }
+.icon.tiktok {
+    background: linear-gradient(45deg, #69C9D0, #EE1D52);
+    color: #fff;
+}
 
  .icon.tw {
      background: #1da1f2;
