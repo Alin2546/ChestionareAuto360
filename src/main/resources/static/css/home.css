@@ -144,13 +144,45 @@
  .start-button {
      background-color: #007bff;
      color: white;
-     padding: 1rem 2rem;
+     padding: 1rem 1.3rem;
      border: none;
      border-radius: 8px;
      font-size: 1.1rem;
      cursor: pointer;
      transition: background-color 0.3s;
      text-decoration: none;
+ }
+
+ .start-button i {
+     display: inline-block;
+     margin-right: 8px;
+     transform-origin: center center;
+     animation: gauge-swing 1.5s ease-in-out infinite;
+ }
+
+ @keyframes gauge-swing {
+     0% {
+         transform: rotate(-10deg);
+     }
+
+     50% {
+         transform: rotate(10deg);
+     }
+
+     100% {
+         transform: rotate(-10deg);
+     }
+ }
+
+ .cta-buttons {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+ }
+
+ .cta-or {
+     font-weight: bold;
+     font-size: 1.1rem;
  }
 
  .start-button:hover {
@@ -299,10 +331,10 @@
      background: #1877f2;
  }
 
-.icon.tiktok {
-    background: linear-gradient(45deg, #69C9D0, #EE1D52);
-    color: #fff;
-}
+ .icon.tiktok {
+     background: linear-gradient(45deg, #69C9D0, #EE1D52);
+     color: #fff;
+ }
 
  .icon.tw {
      background: #1da1f2;
@@ -407,16 +439,32 @@
 
      .start-button {
          background-color: #007bff;
-         color: #fff;
+         color: white;
+         padding: 0.8rem 0.3rem;
          border: none;
          border-radius: 8px;
-         padding: 0.9rem 1.2rem;
          font-size: 1rem;
-         font-weight: 600;
          cursor: pointer;
-         text-decoration: none;
-         display: inline-block;
          transition: background-color 0.3s;
+         text-decoration: none;
+     }
+
+     .start-button i {
+         display: inline-block;
+         margin-right: 8px;
+         transform-origin: center center;
+         animation: gauge-swing 1.5s ease-in-out infinite;
+     }
+
+     .cta-buttons {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+     }
+
+     .cta-or {
+         font-weight: bold;
+         font-size: 1.1rem;
      }
 
      .start-button:hover {
