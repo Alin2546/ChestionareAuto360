@@ -27,9 +27,6 @@ Screenshots:
 ![Landing page - variantă 2](screenshots/homepage2.png)
 ![Landing page - variantă 2](screenshots/homepage3.png)
 
-### Exam questions
-![Exam page](screenshots/Exam questions.png)
-
 ### Register / Login
 
 ![Login](screenshots/login.png)
