@@ -72,7 +72,7 @@
      margin-bottom: 1rem;
  }
 
- .sidebar-header h2 {
+ .sidebar-header h1 {
      font-size: 1.5rem;
  }
 
@@ -130,9 +130,10 @@
      width: 100%;
  }
 
- .main h1 {
+ .main h2 {
      color: #004aad;
      margin-bottom: 1rem;
+     font-size: 30px;
  }
 
  .main p {
@@ -426,11 +427,6 @@
          padding: 2rem 1rem;
      }
 
-     .main h1 {
-         font-size: 1.6rem;
-         margin-bottom: 1rem;
-         color: #004aad;
-     }
 
      .main p {
          font-size: 1rem;
