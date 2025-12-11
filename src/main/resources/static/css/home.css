@@ -162,15 +162,15 @@
 
  @keyframes gauge-swing {
      0% {
-         transform: rotate(-10deg);
+         transform: rotate(-20deg);
      }
 
      50% {
-         transform: rotate(10deg);
+         transform: rotate(20deg);
      }
 
      100% {
-         transform: rotate(-10deg);
+         transform: rotate(-20deg);
      }
  }
 
@@ -348,6 +348,7 @@
 
  .right-panel .branding img {
      width: 100%;
+      height: auto;
      max-width: 180px;
      margin: 15px auto;
      display: block;
