@@ -2,7 +2,6 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #f0f0f0;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -13,16 +12,24 @@ body {
     background: #fff;
     padding: 2rem;
     border-radius: 12px;
-    text-align: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
 }
 
-.message-box h1 {
+button.inactive {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
 }
 
-.message-box p {
+p {
     font-size: 1rem;
     margin-bottom: 2rem;
 }
@@ -44,19 +51,18 @@ body {
     font-size: 1rem;
     border-radius: 8px;
     border: none;
-    cursor: not-allowed;
-    background: #ccc;
-    color: #666;
+    cursor: pointer;
+    background: #007bff;
+    color: #fff;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.duel-buttons button.active {
-    background: #007bff;
-    color: #fff;
-    cursor: pointer;
+.duel-buttons button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
 }
 
 .duel-buttons button i {

@@ -28,6 +28,15 @@ import java.util.Map;
         private Map<String, Double> progressByCategory = new HashMap<>();
 
         private String profileImageUrl;
+
+        /**
+         * Duel stats
+         */
+        private int duelsPlayed;
+        private int duelsWon;
+        private int duelsLost;
+        private int duelsDraw;
+        private int totalPoints;
     }
 
 
