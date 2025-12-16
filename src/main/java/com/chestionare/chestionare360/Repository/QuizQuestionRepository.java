@@ -20,6 +20,9 @@ public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Long
     @Query(value = "SELECT * FROM quiz_questions WHERE category = :category ORDER BY RANDOM() LIMIT 26", nativeQuery = true)
     List<QuizQuestion> findRandomByCategory(@Param("category") String category);
 
+    @Query(value = "SELECT * FROM quiz_questions ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
+    List<QuizQuestion> findRandomQuestions(@Param("limit") int limit);
+
 
 }
 

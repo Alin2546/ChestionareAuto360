@@ -106,9 +106,9 @@ public class HomeController {
     }
 
     @GetMapping("/duel")
-    public String drivingInstructors() {
-        return "duel";
-    }
+    public String startDuel() {
+        return "duel-start";
+    };
 
     @GetMapping("/oug-195-2002")
     public String oug1952002() {

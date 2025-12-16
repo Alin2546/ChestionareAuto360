@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Duel între jucători - Chestionare360</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/duel-game.css">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const questions = [[${questions}]];
+    const duelId = [[${duelId}]];
+    /*]]>*/
+  </script>
+  <script src="/javascript/duel-game.js" defer></script>
+</head>
+<body>
+<header>
+  <button class="home-btn" id="homeBtn" title="Acasă">
+    <i class="fa fa-home"></i>
+  </button>
+  <div>Scor tău: <strong id="player-score">0</strong></div>
+  <div>Scor adversar: <strong id="opponent-score">0</strong></div>
+  <div>Timp rămas: <strong id="timeRemaining">10</strong>secunde</div>
+</header>
+
+<div id="finalMessage" style="display:none;">
+  <p id="finalText"></p>
+  <button id="homeButton" onclick="window.location.href='/'">
+    <i class="fa fa-home"></i>
+  </button>
+</div>
+
+<main>
+  <p class="question-text">Care semn indică interdicția de a vira la stânga?</p>
+
+
+  <div class="question-content">
+    <div class="options">
+      <label>
+        <input type="checkbox" name="option" value="A" />
+        <span class="option-letter">A</span>
+        Semnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul A
+      </label>
+      <label>
+        <input type="checkbox" name="option" value="B" />
+        <span class="option-letter">B</span>
+        Semnul BSemnul ASemnul ASemnul ASemnul A
+      </label>
+      <label>
+        <input type="checkbox" name="option" value="C" />
+        <span class="option-letter">C</span>
+        Semnul CSemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul
+        ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul ASemnul A
+      </label>
+    </div>
+
+    <img id="questionImage" class="question-image" src="https://scoaladrpciv.ro/storage/questions/424.jpeg"
+         alt="Semn rutier interdicție stânga">
+  </div>
+</main>
+  <footer>
+      <button type="button" id="modifyBtn">
+        <i class="fa fa-xmark"></i> MODIFICĂ RĂSPUNSUL
+      </button>
+
+    <button type="button" id="submitBtn">
+      <i class="fa fa-check"></i> TRIMITE RĂSPUNSUL
+    </button>
+  </footer>
+
+</body>
+</html>

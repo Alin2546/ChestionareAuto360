@@ -42,14 +42,21 @@
         <button id="close-btn" aria-label="Închide meniul">×</button>
     </div>
     <a th:href="@{/}">Acasă</a>
-    <a th:href="@{/login}" sec:authorize="isAnonymous()">Autentificare <i class="fa-solid fa-lock"></i></a>
-    <a th:href="@{/account}" sec:authorize="isAuthenticated()">Contul meu <i class="fa-solid fa-user"></i></a>
+    <a th:href="@{/login}" sec:authorize="isAnonymous()">
+        Autentificare <i class="fa-solid fa-lock" style="margin-left:0.5rem;"></i>
+    </a>
+    <a th:href="@{/account}" sec:authorize="isAuthenticated()">
+        Contul meu <i class="fa-solid fa-user" style="margin-left:0.5rem;"></i>
+    </a>
     <a th:href="@{/learning-environment}">Mediu de învățare</a>
     <a th:href="@{/car-quizzes}">Chestionare auto</a>
     <a th:href="@{/drpciv-questions}">Întrebări DRPCIV</a>
     <a th:href="@{/report-question}">Raportează o întrebare</a>
     <a th:href="@{/faq}">Întrebări frecvente</a>
-    <a th:href="@{/driving-instructors}">Instructori auto</a>
+    <a th:href="@{/duel}">
+        Dueluri între jucători
+        <i class="fa-solid fa-shield-halved" style="margin-left: 0.5rem;"></i>
+    </a>
     <a th:href="@{/oug-195-2002}">OUG 195/2002</a>
     <a th:href="@{/traffic-regulations}">Regulament rutier</a>
     <a th:href="@{/terms}">Termeni și condiții</a>
@@ -59,8 +66,6 @@
 <div class="content-wrapper" id="content-wrapper">
     <div class="main">
         <h1>Toate întrebările DRPCIV</h1>
-
-        <!-- Cardurile de întrebări -->
         <div th:each="q : ${questions}" class="question-card">
             <div class="question-text" th:text="${q.text}"></div>
 
