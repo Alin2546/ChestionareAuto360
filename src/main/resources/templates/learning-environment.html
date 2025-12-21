@@ -63,7 +63,7 @@
         <div class="categories-row">
             <a class="card btn-card"
                th:each="cat, iterStat : ${categories}"
-               th:href="@{/quiz/{category}(category=${cat})}"
+               th:href="@{/quiz/learning/{category}(category=${cat})}"
                th:classappend="${cat} == 'Tr' ? ' unavailable'">
                 <h3 th:text="${cat}"></h3>
                 <i class="fa-solid fa-motorcycle" th:if="${cat} == 'A'"></i>
