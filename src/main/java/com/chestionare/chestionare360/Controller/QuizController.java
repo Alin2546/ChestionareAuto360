@@ -29,8 +29,6 @@ public class QuizController {
     private final LearningProgressService learningProgressService;
     private final UserRepo userRepo;
 
-
-
     @GetMapping("/{category}")
     public String showQuiz(@PathVariable String category, Model model) {
         List<QuizQuestion> questions = quizQuestionRepository.findRandomByCategory(category);
@@ -38,7 +36,6 @@ public class QuizController {
         model.addAttribute("quizName", category);
         return "quiz";
     }
-
 
     @PostMapping("/submit")
     @ResponseBody
@@ -71,19 +68,14 @@ public class QuizController {
         if (principal == null) {
             return "redirect:/login";
         }
-
         String phone = principal.getName();
         User user = userRepo.findByPhoneNumber(phone)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         LearningProgress progress = learningProgressService.getProgress(user)
                 .orElseGet(() -> learningProgressService.createProgress(user, category));
-
         List<QuizQuestion> questions = quizQuestionRepository.findByCategory(category);
-
         model.addAttribute("questions", questions);
         model.addAttribute("category", category);
-
         return "learning-environment-quiz";
     }
 }

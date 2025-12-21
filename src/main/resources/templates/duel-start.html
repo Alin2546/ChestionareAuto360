@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Start Duel - Chestionare360</title>
@@ -13,12 +13,54 @@
     <h1>Duel între jucători</h1>
     <p>Alege cum vrei să începi:</p>
     <div class="duel-buttons">
-        <button id="find-opponent" onclick="window.location.href='/duel/game?mode=auto'">
-            Găsește un adversar
-        </button>
-        <button id="coop-friend" disabled class="inactive">
-            Joacă cu un prieten
-        </button>
+        <button id="find-opponent" disabled class="inactive">Duel online</button>
+        <button id="coop-friend" disabled class="inactive">Joacă cu un prieten</button>
+        <button id="computer-play">Joacă cu computerul</button>
+    </div>
+</div>
+
+<div id="categoryModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h2>Alege categoria</h2>
+        <div class="categories">
+            <button th:each="cat : ${categories}"
+                    th:text="${cat}"
+                    th:attr="data-category=${cat}"
+                    class="category-btn">
+            </button>
+        </div>
+        <button id="closeModal" class="close-btn">Renunță</button>
+        <p id="status" class="status-text"></p>
+    </div>
+</div>
+
+<div id="friendDuelContainer" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h2>Joacă cu un prieten</h2>
+        <div id="friendOptions">
+            <button id="createDuelBtn">Creează duel</button>
+            <button id="joinDuelBtn">Alătură-te duelului</button>
+        </div>
+
+        <div id="duelCodeSection" style="display:none;">
+            <p id="duelCodeText"></p>
+            <input type="text" id="joinDuelInput" placeholder="Introdu codul duelului">
+            <button id="joinDuelConfirmBtn">Intră în duel</button>
+        </div>
+
+        <div id="friendCategorySection" style="display:none;">
+            <h3>Alege categoria pentru duel</h3>
+            <div class="categories">
+                <button th:each="cat : ${categories}"
+                        th:text="${cat}"
+                        th:attr="data-category=${cat}"
+                        class="friend-category-btn">
+                </button>
+            </div>
+        </div>
+
+        <button id="closeFriendModal" class="close-btn">Renunță</button>
+        <p id="friendStatus" class="status-text"></p>
     </div>
 </div>
 </body>

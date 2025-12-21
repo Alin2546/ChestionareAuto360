@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="ro" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Duel între jucători - Chestionare360</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/duel-game.css">
   <script th:inline="javascript">
     /*<![CDATA[*/
-    const questions = [[${questions}]];
-    const duelId = [[${duelId}]];
+    const questions = [[${ questions }]];
+    const duelId = [[${ duelId }]];
     /*]]>*/
   </script>
   <script src="/javascript/duel-game.js" defer></script>
 </head>
+
 <body>
 <header>
   <button class="home-btn" id="homeBtn" title="Acasă">
     <i class="fa fa-home"></i>
   </button>
-  <div>Scor tău: <strong id="player-score">0</strong></div>
-  <div>Scor adversar: <strong id="opponent-score">0</strong></div>
-  <div>Timp rămas: <strong id="timeRemaining">10</strong>secunde</div>
+  <div>Scorul tău<strong id="player-score">0</strong></div>
+  <div>Scor adversar<strong id="opponent-score">0</strong></div>
+  <div><strong id="timeRemaining">15</strong>secunde</div>
+  <div>Întrebări rămase: <strong id="questionsLeft">10</strong></div>
 </header>
 
 <div id="finalMessage" style="display:none;">
@@ -59,15 +63,16 @@
          alt="Semn rutier interdicție stânga">
   </div>
 </main>
-  <footer>
-      <button type="button" id="modifyBtn">
-        <i class="fa fa-xmark"></i> MODIFICĂ RĂSPUNSUL
-      </button>
+<footer>
+  <button type="button" id="modifyBtn">
+    <i class="fa fa-xmark"></i> MODIFICA RASPUNSUL
+  </button>
 
-    <button type="button" id="submitBtn">
-      <i class="fa fa-check"></i> TRIMITE RĂSPUNSUL
-    </button>
-  </footer>
+  <button type="button" id="submitBtn">
+    <i class="fa fa-check"></i> TRIMITE RĂSPUNSUL
+  </button>
+</footer>
 
 </body>
+
 </html>

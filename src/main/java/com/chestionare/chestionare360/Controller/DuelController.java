@@ -1,18 +1,20 @@
 package com.chestionare.chestionare360.Controller;
 
+import com.chestionare.chestionare360.Model.Dto.FinishDuelRequest;
 import com.chestionare.chestionare360.Model.Duel;
+import com.chestionare.chestionare360.Model.DuelStatus;
 import com.chestionare.chestionare360.Model.QuizQuestion;
 import com.chestionare.chestionare360.Model.User;
+import com.chestionare.chestionare360.Repository.DuelRepository;
 import com.chestionare.chestionare360.Repository.QuizQuestionRepository;
 import com.chestionare.chestionare360.Service.DuelService;
 import com.chestionare.chestionare360.Repository.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/duel")
@@ -22,25 +24,35 @@ public class DuelController {
     private final DuelService duelService;
     private final UserRepo userRepo;
     private final QuizQuestionRepository quizQuestionRepository;
+    private final DuelRepository duelRepository;
 
 
     @GetMapping("/start")
-    public String duelPage() {
+    public String duelPage(Model model) {
+        List<String> categories = List.of("A", "B", "C", "D", "E", "Tr", "13din15");
+        model.addAttribute("categories", categories);
         return "duel-start";
     }
 
     @GetMapping("/game")
-    public String duelGame(Model model) {
-        List<QuizQuestion> questions = quizQuestionRepository.findRandomQuestions(10);
+    public String duelGame(@RequestParam Long duelId,
+                           @RequestParam String category,
+                           Model model) {
+        Duel duel = duelService.getDuel(duelId);
+        List<QuizQuestion> questions = quizQuestionRepository.findRandomQuestionsByCategory(category, 10);
+        model.addAttribute("duelId", duel.getId());
+        model.addAttribute("duel", duel);
         model.addAttribute("questions", questions);
         return "duel-game";
     }
 
+
     @PostMapping("/find")
     @ResponseBody
-    public Duel findDuel(@RequestParam int userId) {
+    public Duel findDuel(@RequestParam int userId,
+                         @RequestParam String category) {
         User user = userRepo.findById(userId).orElseThrow();
-        return duelService.findOrCreateDuel(user);
+        return duelService.createSinglePlayerDuel(user, category);
     }
 
     @PostMapping("/join")
@@ -67,8 +79,12 @@ public class DuelController {
 
     @PostMapping("/finish")
     @ResponseBody
-    public void finishDuel(@RequestParam Long duelId) {
-        duelService.finishDuel(duelId);
+    public void finishDuel(@RequestBody FinishDuelRequest request) {
+        duelService.finishDuel(
+                request.getDuelId(),
+                request.getPlayer1Score(),
+                request.getPlayer2Score()
+        );
     }
 
     @GetMapping("/{duelId}")
@@ -83,5 +99,27 @@ public class DuelController {
     public List<QuizQuestion> getRandomQuestions(@RequestParam(defaultValue = "10") int limit) {
         return quizQuestionRepository.findRandomQuestions(limit);
     }
+
+    @PostMapping("/create")
+    @ResponseBody
+    public Map<String, Object> createDuel(@RequestParam int userId, @RequestParam String category) {
+        Optional<User> userOpt = userRepo.findById(userId);
+        if (userOpt.isEmpty()) {
+            throw new RuntimeException("User nu există");
+        }
+
+        Duel duel = new Duel();
+        duel.setPlayer1(userOpt.get());
+        duel.setCategory(category);
+        duel.setStatus(DuelStatus.WAITING);
+        duel.setCode(UUID.randomUUID().toString().substring(0, 6).toUpperCase());
+        duelRepository.save(duel);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", duel.getCode());
+        response.put("duelId", duel.getId());
+        return response;
+    }
+
 
 }

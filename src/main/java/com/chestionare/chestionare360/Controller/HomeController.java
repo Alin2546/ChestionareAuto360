@@ -72,10 +72,6 @@ public class HomeController {
     @GetMapping("/car-quizzes")
     public String carQuizzes(Model model) {
         List<String> categories = List.of("A", "B", "C", "D", "E", "Tr", "13din15");
-
-        List<String> existingCategories = categories.stream()
-                .filter(quizQuestionRepository::existsByCategory)
-                .toList();
         model.addAttribute("categories", categories);
         return "car-quizzes";
     }

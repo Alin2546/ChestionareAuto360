@@ -12,8 +12,6 @@ import java.util.List;
 public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Long> {
     List<QuizQuestion> findByCategory(String category);
 
-    boolean existsByCategory(String category);
-
     @Query("SELECT COUNT(q) FROM QuizQuestion q WHERE q.category = :category")
     long countByCategory(@Param("category") String category);
 
@@ -23,6 +21,7 @@ public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Long
     @Query(value = "SELECT * FROM quiz_questions ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
     List<QuizQuestion> findRandomQuestions(@Param("limit") int limit);
 
-
+    @Query(value = "SELECT * FROM quiz_questions q WHERE q.category = :category ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
+    List<QuizQuestion> findRandomQuestionsByCategory(@Param("category") String category, @Param("limit") int limit);
 }
 

@@ -19,14 +19,6 @@ public class DuelService {
     private final DuelRepository duelRepository;
     private final UserRepo userRepository;
 
-
-    public Duel createDuel(User player1) {
-        Duel duel = new Duel();
-        duel.setPlayer1(player1);
-        duel.setStatus(DuelStatus.WAITING);
-        return duelRepository.save(duel);
-    }
-
     public Duel joinDuel(Long duelId, User player2) {
         Duel duel = getDuel(duelId);
         if (duel.getStatus() != DuelStatus.WAITING) {
@@ -36,25 +28,6 @@ public class DuelService {
         duel.setStatus(DuelStatus.IN_PROGRESS);
         duel.setStartedAt(LocalDateTime.now());
         return duelRepository.save(duel);
-    }
-
-    public Duel findOrCreateDuel(User user) {
-        boolean inDuel = duelRepository.existsByPlayer1IdOrPlayer2IdAndStatus(
-                user.getId(),
-                user.getId(),
-                DuelStatus.IN_PROGRESS
-        );
-
-        if (inDuel) {
-            throw new IllegalStateException("User already in a duel");
-        }
-
-        return duelRepository.findByStatus(DuelStatus.WAITING)
-                .stream()
-                .filter(d -> d.getPlayer1().getId() != user.getId())
-                .findFirst()
-                .map(duel -> joinDuel(duel.getId(), user))
-                .orElseGet(() -> createDuel(user));
     }
 
     public void submitAnswer(Long duelId, User user, boolean correct, long timeSpentMillis) {
@@ -68,14 +41,36 @@ public class DuelService {
         } else {
             duel.setPlayer2Score(duel.getPlayer2Score() + points);
         }
+        duelRepository.save(duel);
     }
 
-    public void finishDuel(Long duelId) {
-        Duel duel = getDuel(duelId);
-        duel.setStatus(DuelStatus.FINISHED);
-        duel.setFinishedAt(LocalDateTime.now());
-        updateStats(duel);
+    public Duel createSinglePlayerDuel(User user, String category) {
+        Duel duel = new Duel();
+        duel.setPlayer1(user);
+        duel.setPlayer2(null);
+        duel.setCategory(category);
+        duel.setStatus(DuelStatus.IN_PROGRESS);
+        duel.setStartedAt(LocalDateTime.now());
+        duel.setPlayer1Score(0);
+        duel.setPlayer2Score(0);
+        return duelRepository.save(duel);
     }
+
+
+    public void finishDuel(Long duelId, int p1Score, int p2Score) {
+
+        Duel duel = duelRepository.findById(duelId)
+                .orElseThrow(() -> new RuntimeException("Duel not found"));
+
+        duel.setPlayer1Score(p1Score);
+        duel.setPlayer2Score(p2Score);
+        duel.setStatus(DuelStatus.FINISHED);
+
+        updateStats(duel);
+
+        duelRepository.save(duel);
+    }
+
 
     public Duel getDuel(Long duelId) {
         return duelRepository.findById(duelId)
@@ -92,22 +87,23 @@ public class DuelService {
     private void updateStats(Duel duel) {
         User p1 = duel.getPlayer1();
         User p2 = duel.getPlayer2();
-
         p1.setDuelsPlayed(p1.getDuelsPlayed() + 1);
-        p2.setDuelsPlayed(p2.getDuelsPlayed() + 1);
 
-        if (duel.getPlayer1Score() > duel.getPlayer2Score()) {
-            p1.setDuelsWon(p1.getDuelsWon() + 1);
-            p2.setDuelsLost(p2.getDuelsLost() + 1);
-        } else if (duel.getPlayer1Score() < duel.getPlayer2Score()) {
-            p2.setDuelsWon(p2.getDuelsWon() + 1);
-            p1.setDuelsLost(p1.getDuelsLost() + 1);
-        } else {
-            p1.setDuelsDraw(p1.getDuelsDraw() + 1);
-            p2.setDuelsDraw(p2.getDuelsDraw() + 1);
+        if (p2 != null) {
+            p2.setDuelsPlayed(p2.getDuelsPlayed() + 1);
+            if (duel.getPlayer1Score() > duel.getPlayer2Score()) {
+                p1.setDuelsWon(p1.getDuelsWon() + 1);
+                p2.setDuelsLost(p2.getDuelsLost() + 1);
+            } else if (duel.getPlayer1Score() < duel.getPlayer2Score()) {
+                p2.setDuelsWon(p2.getDuelsWon() + 1);
+                p1.setDuelsLost(p1.getDuelsLost() + 1);
+            } else {
+                p1.setDuelsDraw(p1.getDuelsDraw() + 1);
+                p2.setDuelsDraw(p2.getDuelsDraw() + 1);
+            }
+            userRepository.save(p2);
         }
-
         userRepository.save(p1);
-        userRepository.save(p2);
     }
+
 }
