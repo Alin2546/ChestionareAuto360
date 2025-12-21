@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,4 +31,10 @@ public class Duel {
 
     private LocalDateTime startedAt;
     private LocalDateTime finishedAt;
+
+    private String category;
+
+    @Column(unique = true)
+    private String code;
+
 }
