@@ -17,6 +17,8 @@
         /*<![CDATA[*/
         const questions = [[${ questions }]];
         const quizName = [[${ quizName }]];
+            const quizType = /*[[${quizType}]]*/ "normal";
+    const maxWrong = /*[[${maxWrong}]]*/ 4;
         /*]]>*/
     </script>
     <script src="/javascript/quiz.js" defer></script>
@@ -27,9 +29,9 @@
     <button class="home-btn" id="homeBtn" title="Acasă">
         <i class="fa fa-home"></i>
     </button>
-    <div>Întrebări totale <strong id="totalQuestions">26</strong></div>
-    <div>Întrebări rămase <strong id="questionsLeft">26</strong></div>
-    <div>Timp rămas <strong id="timeRemaining">30:00</strong></div>
+    <div>Întrebări totale <strong id="totalQuestions"></strong></div>
+    <div>Întrebări rămase <strong id="questionsLeft"></strong></div>
+    <div>Timp rămas <strong id="timeRemaining"></strong></div>
     <div>Corecte <strong id="correctAnswers">0</strong></div>
     <div>Greșite <strong id="wrongAnswers">0</strong></div>
 </header>

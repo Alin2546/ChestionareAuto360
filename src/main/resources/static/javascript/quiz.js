@@ -10,6 +10,11 @@
     const wrongAnswersEl = document.getElementById('wrongAnswers');
     const submitBtn = document.getElementById('submitBtn');
 
+    const totalQuestionsEl = document.getElementById("totalQuestions");
+
+    totalQuestionsEl.textContent = questions.length;
+    questionsLeftEl.textContent = questions.length;
+
     const totalQuestionsField = document.getElementById("totalQuestionsField");
     const correctAnswersField = document.getElementById("correctAnswersField");
     const wrongAnswersField = document.getElementById("wrongAnswersField");
@@ -37,7 +42,7 @@
     }
 
 
-let timeLeft = 1800;
+let timeLeft = quizType === "13din15" ? 900 : 1800;
 const timeRemainingEl = document.getElementById("timeRemaining");
 const timeWarningSound = new Audio("/sounds/timeleft.mp3");
 
@@ -214,10 +219,10 @@ countdownInterval = setInterval(countdown, 1000);
     correctAnswers++;
 } else {
     wrongAnswers++;
-    if (wrongAnswers >= 5) {
-        finalizeQuiz(true);
-        return;
-    }
+   if (wrongAnswers > maxWrong) {
+       finalizeQuiz(true);
+       return;
+   }
 }
             correctAnswersEl.textContent = correctAnswers;
             wrongAnswersEl.textContent = wrongAnswers;

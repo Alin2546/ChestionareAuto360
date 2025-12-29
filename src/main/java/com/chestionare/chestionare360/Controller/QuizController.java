@@ -31,11 +31,25 @@ public class QuizController {
 
     @GetMapping("/{category}")
     public String showQuiz(@PathVariable String category, Model model) {
-        List<QuizQuestion> questions = quizQuestionRepository.findRandomByCategory(category);
+
+        List<QuizQuestion> questions;
+
+        if ("13din15".equals(category)) {
+            questions = quizQuestionRepository.findRandomQuestions(15);
+            model.addAttribute("maxWrong", 2);
+            model.addAttribute("quizType", "13din15");
+        } else {
+            questions = quizQuestionRepository.findRandomQuestionsByCategory(category, 26);
+            model.addAttribute("maxWrong", 4);
+            model.addAttribute("quizType", "normal");
+        }
+
         model.addAttribute("questions", questions);
         model.addAttribute("quizName", category);
+
         return "quiz";
     }
+
 
     @PostMapping("/submit")
     @ResponseBody
