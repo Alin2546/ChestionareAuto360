@@ -6,10 +6,11 @@ import com.chestionare.chestionare360.Model.DuelStatus;
 import com.chestionare.chestionare360.Model.QuizQuestion;
 import com.chestionare.chestionare360.Model.User;
 import com.chestionare.chestionare360.Repository.DuelRepository;
-import com.chestionare.chestionare360.Repository.QuizQuestionRepository;
 import com.chestionare.chestionare360.Service.DuelService;
 import com.chestionare.chestionare360.Repository.UserRepo;
+import com.chestionare.chestionare360.Service.SecurityService.MyUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,46 +24,92 @@ public class DuelController {
 
     private final DuelService duelService;
     private final UserRepo userRepo;
-    private final QuizQuestionRepository quizQuestionRepository;
     private final DuelRepository duelRepository;
 
 
     @GetMapping("/start")
-    public String duelPage(Model model) {
+    public String duelPage(Model model, @AuthenticationPrincipal MyUser principal) {
         List<String> categories = List.of("A", "B", "C", "D", "E", "Tr", "13din15");
         model.addAttribute("categories", categories);
+        if (principal != null) {
+            User user = principal.getUser();
+            model.addAttribute("userId", user.getId());
+        } else {
+            model.addAttribute("userId", null);
+        }
         return "duel-start";
     }
+
+
 
     @GetMapping("/game")
     public String duelGame(@RequestParam Long duelId,
                            @RequestParam String category,
                            Model model) {
         Duel duel = duelService.getDuel(duelId);
-        List<QuizQuestion> questions = quizQuestionRepository.findRandomQuestionsByCategory(category, 10);
+        List<QuizQuestion> questions = duelService.getQuestionsForDuel(duel);
         model.addAttribute("duelId", duel.getId());
         model.addAttribute("duel", duel);
         model.addAttribute("questions", questions);
         return "duel-game";
     }
 
+    @GetMapping("/{duelId}")
+    public String duelView(@PathVariable Long duelId, Model model) {
+        Duel duel = duelService.getDuel(duelId);
+        model.addAttribute("duel", duel);
+        return "duel-game";
+    }
 
-    @PostMapping("/find")
+    @GetMapping("/status/{duelId}")
     @ResponseBody
-    public Duel findDuel(@RequestParam int userId,
-                         @RequestParam String category) {
-        User user = userRepo.findById(userId).orElseThrow();
+    public Map<String, Object> getDuelStatus(@PathVariable Long duelId) {
+        Duel duel = duelService.getDuel(duelId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", duel.getStatus().name());
+        return response;
+    }
+
+
+    @GetMapping("/json/{duelId}")
+    @ResponseBody
+    public Duel getDuelJson(@PathVariable Long duelId) {
+        return duelService.getDuel(duelId);
+    }
+
+    @PostMapping("/computer")
+    @ResponseBody
+    public Duel computerDuel(
+            @RequestParam(required = false) Integer userId,
+            @RequestParam String category) {
+        User user = null;
+        if (userId != null) {
+            user = userRepo.findById(userId).orElse(null);
+        }
         return duelService.createSinglePlayerDuel(user, category);
     }
 
-    @PostMapping("/join")
+
+    @PostMapping("/join-by-code")
     @ResponseBody
-    public Duel joinDuel(
-            @RequestParam Long duelId,
-            @RequestParam int userId
-    ) {
-        User user = userRepo.findById(userId).orElseThrow();
-        return duelService.joinDuel(duelId, user);
+    public Map<String, Object> joinFriendDuel(
+            @RequestParam String code,
+            @RequestParam(required = false) Integer userId) {
+        Duel duel = duelRepository.findByCode(code)
+                .orElseThrow(() -> new RuntimeException("Duel nu există"));
+        User player2 = null;
+        if (userId != null) {
+            player2 = userRepo.findById(userId).orElse(null);
+        }
+        duel = duelService.joinFriendDuel(duel.getId(), player2);
+        duel.setStatus(DuelStatus.IN_PROGRESS);
+        duelRepository.save(duel);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("duelId", duel.getId());
+        response.put("success", true);
+        response.put("category", duel.getCategory());
+        return response;
     }
 
     @PostMapping("/answer")
@@ -87,39 +134,26 @@ public class DuelController {
         );
     }
 
-    @GetMapping("/{duelId}")
-    public String duelView(@PathVariable Long duelId, Model model) {
-        Duel duel = duelService.getDuel(duelId);
-        model.addAttribute("duel", duel);
-        return "duel-game";
-    }
-
-    @GetMapping("/get-random-questions")
+    @PostMapping("/create-friend")
     @ResponseBody
-    public List<QuizQuestion> getRandomQuestions(@RequestParam(defaultValue = "10") int limit) {
-        return quizQuestionRepository.findRandomQuestions(limit);
-    }
+    public Map<String, Object> createFriendDuel(
+            @RequestParam(required = false) Integer userId,
+            @RequestParam String category) {
 
-    @PostMapping("/create")
-    @ResponseBody
-    public Map<String, Object> createDuel(@RequestParam int userId, @RequestParam String category) {
-        Optional<User> userOpt = userRepo.findById(userId);
-        if (userOpt.isEmpty()) {
-            throw new RuntimeException("User nu există");
+        User player1 = null;
+        if (userId != null) {
+            player1 = userRepo.findById(userId).orElse(null);
         }
 
-        Duel duel = new Duel();
-        duel.setPlayer1(userOpt.get());
-        duel.setCategory(category);
-        duel.setStatus(DuelStatus.WAITING);
-        duel.setCode(UUID.randomUUID().toString().substring(0, 6).toUpperCase());
-        duelRepository.save(duel);
+        Duel duel = duelService.createFriendDuel(player1, category);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("code", duel.getCode());
         response.put("duelId", duel.getId());
+        response.put("code", duel.getCode());
+        response.put("category", duel.getCategory());
         return response;
     }
+
 
 
 }

@@ -11,6 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const optionsEl = document.querySelector(".options");
   const playerScoreEl = document.getElementById('player-score');
   const opponentScoreEl = document.getElementById('opponent-score');
+
+console.log('[' + duelType + ']');
+
+const mode = duelType ===  '"Friend Duel"' ? 'friend' : 'computer';
+
+console.log('Mode:', mode);
+
+
+
+
+  const opponentScoreContainer = document.getElementById('opponentScoreContainer');
+  if (mode === 'friend') {
+      opponentScoreContainer.style.display = 'none';
+  } else {
+      opponentScoreContainer.style.display = 'block';
+  }
+
   const timeRemainingEl = document.getElementById("timeRemaining");
   const submitBtn = document.getElementById('submitBtn');
   const modifyBtn = document.getElementById('modifyBtn');
@@ -143,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+
   function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < duelState.questions.length) {
@@ -190,39 +208,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function finalizeDuel() {
+function finalizeDuel() {
 
     if (!duelId) {
-      console.error("duelId nu este definit!");
-      return;
+        console.error("duelId nu este definit!");
+        return;
     }
 
     const playerScore = duelState.player.score;
     const opponentScore = duelState.opponent.score;
 
     fetch(`/duel/finish`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        duelId: duelId,
-        player1Score: playerScore,
-        player2Score: opponentScore
-      })
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            duelId: duelId,
+            player1Score: playerScore,
+            player2Score: opponentScore
+        })
     }).then(() => {
-      let resultText;
-      if (playerScore > opponentScore) {
-        resultText = `Ai câștigat duelul! ${playerScore} - ${opponentScore}`;
-      } else if (playerScore < opponentScore) {
-        resultText = `Ai pierdut duelul! ${playerScore} - ${opponentScore}`;
-      } else {
-        resultText = `Egalitate! ${playerScore} - ${opponentScore}`;
-      }
 
-      alert(resultText);
-      window.location.href = "/";
+        if (mode === 'computer') {
+            let resultText;
+            if (playerScore > opponentScore) {
+                resultText = `Ai câștigat duelul! ${playerScore} - ${opponentScore}`;
+            } else if (playerScore < opponentScore) {
+                resultText = `Ai pierdut duelul! ${playerScore} - ${opponentScore}`;
+            } else {
+                resultText = `Egalitate! ${playerScore} - ${opponentScore}`;
+            }
+            alert(resultText);
+        } else if (mode === 'friend') {
+            alert(`Scorul tău: ${playerScore}`);
+        }
+
+        window.location.href = "/";
     });
-  }
+}
+
   loadQuestion(currentQuestionIndex);
 });

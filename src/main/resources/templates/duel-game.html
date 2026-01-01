@@ -12,6 +12,7 @@
     /*<![CDATA[*/
     const questions = [[${ questions }]];
     const duelId = [[${ duelId }]];
+    const duelType = '[[${ duel.duelType }]]';
     /*]]>*/
   </script>
   <script src="/javascript/duel-game.js" defer></script>
@@ -23,7 +24,9 @@
     <i class="fa fa-home"></i>
   </button>
   <div>Scorul tău<strong id="player-score">0</strong></div>
-  <div>Scor adversar<strong id="opponent-score">0</strong></div>
+  <div id="opponentScoreContainer">
+    Scor adversar<strong id="opponent-score">0</strong>
+  </div>
   <div><strong id="timeRemaining">15</strong>secunde</div>
   <div>Întrebări rămase: <strong id="questionsLeft">10</strong></div>
 </header>

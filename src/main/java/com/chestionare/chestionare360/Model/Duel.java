@@ -16,11 +16,15 @@ public class Duel {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "player1_id", nullable = true)
     private User player1;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "player2_id", nullable = true)
     private User player2;
+
+    private String DuelType;
 
     private int player1Score;
     private int player2Score;

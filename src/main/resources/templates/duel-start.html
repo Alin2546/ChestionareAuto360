@@ -6,15 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/duel-start.css">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            let USER_ID = [[${userId}]];
+        /*]]>*/
+    </script>
     <script src="/javascript/duel-start.js" defer></script>
 </head>
 <body>
+
 <div class="message-box">
     <h1>Duel între jucători</h1>
     <p>Alege cum vrei să începi:</p>
     <div class="duel-buttons">
         <button id="find-opponent" disabled class="inactive">Duel online</button>
-        <button id="coop-friend" disabled class="inactive">Joacă cu un prieten</button>
+        <button id="coop-friend">Joacă cu un prieten</button>
         <button id="computer-play">Joacă cu computerul</button>
     </div>
 </div>
@@ -37,6 +43,7 @@
 <div id="friendDuelContainer" class="modal" style="display:none;">
     <div class="modal-content">
         <h2>Joacă cu un prieten</h2>
+
         <div id="friendOptions">
             <button id="createDuelBtn">Creează duel</button>
             <button id="joinDuelBtn">Alătură-te duelului</button>
@@ -63,5 +70,6 @@
         <p id="friendStatus" class="status-text"></p>
     </div>
 </div>
+
 </body>
 </html>

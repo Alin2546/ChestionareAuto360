@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const findBtn = document.getElementById('find-opponent');
-    const friendBtn = document.getElementById('coop-friend');
     const computerPlayBtn = document.getElementById('computer-play');
-    const status = document.getElementById('status');
-
+    const friendBtn = document.getElementById('coop-friend');
     const modal = document.getElementById('categoryModal');
     const closeBtn = document.getElementById('closeModal');
+    const status = document.getElementById('status');
 
     const friendModal = document.getElementById('friendDuelContainer');
     const createBtn = document.getElementById('createDuelBtn');
@@ -15,38 +13,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const joinDuelInput = document.getElementById('joinDuelInput');
     const joinDuelConfirmBtn = document.getElementById('joinDuelConfirmBtn');
     const friendCategorySection = document.getElementById('friendCategorySection');
-    const closeFriendModal = document.getElementById('closeFriendModal');
     const friendStatus = document.getElementById('friendStatus');
+    const closeFriendModal = document.getElementById('closeFriendModal');
+    const friendOptions = document.getElementById('friendOptions');
 
-    let playerId = 1;
+    let playerId = USER_ID;
     let selectedCategory = null;
+    let duelId = null;
+    let currentFlow = null;
 
-    findBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-    });
 
     computerPlayBtn.addEventListener('click', () => {
         modal.style.display = 'flex';
+        currentFlow = 'computer';
     });
 
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    closeBtn.addEventListener('click', () => modal.style.display = 'none');
 
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             selectedCategory = btn.dataset.category;
             modal.style.display = 'none';
-            startMatchmaking();
+
+            if (currentFlow === 'computer') {
+                startComputerMatch();
+                currentFlow = null;
+            }
         });
     });
 
-    function startMatchmaking() {
+    function startComputerMatch() {
         status.textContent = `Se caută adversar pentru categoria ${selectedCategory}...`;
-        fetch('/duel/find', {
+
+        const bodyData = new URLSearchParams();
+        if (playerId) bodyData.append('userId', playerId);
+        bodyData.append('category', selectedCategory);
+
+        fetch('/duel/computer', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `userId=${playerId}&category=${selectedCategory}`
+            body: bodyData.toString()
         })
         .then(res => res.json())
         .then(duel => {
@@ -69,36 +75,50 @@ document.addEventListener('DOMContentLoaded', () => {
         duelCodeText.style.display = 'block';
         joinDuelInput.style.display = 'none';
         joinDuelConfirmBtn.style.display = 'none';
-        document.getElementById('friendOptions').style.display = 'block';
+        friendOptions.style.display = 'block';
+        currentFlow = 'friend';
     });
 
-    closeFriendModal.addEventListener('click', () => {
-        friendModal.style.display = 'none';
-    });
+    closeFriendModal.addEventListener('click', () => friendModal.style.display = 'none');
 
     createBtn.addEventListener('click', () => {
         friendCategorySection.style.display = 'block';
         duelCodeSection.style.display = 'none';
+        friendOptions.style.display = 'none';
         friendStatus.textContent = '';
-        document.getElementById('friendOptions').style.display = 'none';
     });
 
     document.querySelectorAll('.friend-category-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
+            if (currentFlow !== 'friend') return;
+
             selectedCategory = btn.dataset.category;
-            const response = await fetch('/duel/create', {
+            const body = new URLSearchParams();
+            if (playerId) body.append('userId', playerId);
+            body.append('category', selectedCategory);
+            const response = await fetch('/duel/create-friend', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `userId=${playerId}&category=${selectedCategory}`
+                body: body.toString()
             });
             const data = await response.json();
-            duelCodeText.innerHTML = `
-                <span>Codul duelului: ${data.code}</span>
-                <div class="spinner"></div>
-            `;
+
+            duelId = data.duelId;
+            duelCodeText.innerHTML = `<span>Codul duelului: ${data.code}</span><div class="spinner"></div>`;
             duelCodeSection.style.display = 'block';
             friendCategorySection.style.display = 'none';
             friendStatus.textContent = 'Așteaptă ca prietenul să se alăture...';
+
+
+            const interval = setInterval(async () => {
+                const res = await fetch(`/duel/json/${duelId}`);
+                const duel = await res.json();
+                if (duel.status === 'IN_PROGRESS') {
+                    clearInterval(interval);
+
+                    window.location.href = `/duel/game?duelId=${duelId}&category=${duel.category}`;
+                }
+            }, 2000);
         });
     });
 
@@ -109,17 +129,26 @@ document.addEventListener('DOMContentLoaded', () => {
         joinDuelConfirmBtn.style.display = 'inline-block';
         friendCategorySection.style.display = 'none';
         friendStatus.textContent = '';
-        document.getElementById('friendOptions').style.display = 'none';
+        friendOptions.style.display = 'none';
     });
 
     joinDuelConfirmBtn.addEventListener('click', async () => {
         const code = joinDuelInput.value.trim();
         if (!code) return friendStatus.textContent = 'Trebuie să introduci un cod!';
-        const response = await fetch(`/duel/join?code=${code}`, { method: 'POST' });
+
+        const body = new URLSearchParams();
+        if (playerId) body.append('userId', playerId);
+        body.append('code', code);
+
+        const response = await fetch('/duel/join-by-code', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body.toString()
+        });
         const data = await response.json();
         if (data.success) {
             friendStatus.textContent = 'Te-ai alăturat duelului!';
-            window.location.href = `/duel/game?duelId=${data.duelId}`;
+            window.location.href = `/duel/game?duelId=${data.duelId}&category=${data.category}`;
         } else {
             friendStatus.textContent = 'Cod invalid sau duelul nu există.';
         }
